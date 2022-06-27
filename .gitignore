@@ -1,0 +1,25 @@
+.idea
+
+# Client
+/Client/dist
+/Client/package-lock.json
+/Client/node_modules
+/Client/.pnp
+/Client.pnp.js
+/Client/coverage
+/Client/build
+/Client/.env
+/Client/.DS_Store
+/Client/.env.local
+/Client/.env.development.local
+/Client/.env.test.local
+/Client/.env.production.local
+/Client/npm-debug.log*
+/Client/yarn-debug.log*
+/Client/yarn-error.log*
+
+# Server
+/Server/dist
+/Server/node_modules
+/Server/package-lock.json
+/Server/.env
