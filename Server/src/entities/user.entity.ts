@@ -1,36 +1,41 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Column, Entity } from 'typeorm';
+
+import { roleEnum } from '../enums';
+import { CommonsFields } from './commons-fields.entity';
 
 @Entity()
-export class User {
-    @PrimaryGeneratedColumn()
-        id: number;
-
+export class User extends CommonsFields {
     @Column({
+        name: 'nickName',
         type: 'varchar',
-        width: 25,
+        unique: true,
+        length: 50,
+        nullable: false,
     })
-        name: string;
+        nickName: string;
 
     @Column({
+        name: 'password',
         type: 'varchar',
-        width: 250,
+        width: 255,
+        nullable: false,
     })
-        email: string;
+        password: string;
 
     @Column({
-        type: 'int',
+        name: 'email',
+        type: 'varchar',
+        width: 255,
+        nullable: false,
     })
-        age: number;
+        email :string;
 
     @Column({
-        default: new Date(),
-        type: 'timestamp',
-    })
-        createdAt: string;
-
-    @Column({
+        name: 'role',
+        type: 'varchar',
+        width: 5,
         nullable: true,
-        type: 'timestamp',
+        default: roleEnum.USER,
     })
-        deletedAt: string;
+        role?: string;
 }

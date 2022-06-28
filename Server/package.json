@@ -5,9 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint --cache --ext .js,.ts src",
+    "lint:fix": "npm run lint -- --fix",
     "start:dev": "rimraf dist && tsc-watch --onSuccess \"nodemon ./src/app.ts\"",
-    "typeorm": "typeorm-ts-node-commonjs",
-    "migration:run": "npx typeorm-ts-node-commonjs migration:run -d ./src/data-source.ts"
+    "migration:run": "npx typeorm-ts-node-commonjs migration:run -d ./src/ormconfig.ts",
+    "migration:create": "typeorm migration:create",
+    "migration:revert": "typeorm-ts-node-commonjs -d ./src/ormconfig.ts migration:revert",
+    "migration:generate": "npx typeorm-ts-node-esm migration:generate ./src/migrations/update-post-table -d ./src/ormconfig.ts"
   },
   "keywords": [],
   "author": "",
