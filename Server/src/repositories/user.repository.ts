@@ -2,14 +2,14 @@ import { AppDataSource } from '../ormconfig';
 import { User } from '../entities/user.entity';
 
 class UserRepository {
-    userRepository;
+    user;
 
     constructor() {
-        this.userRepository = AppDataSource.getRepository(User);
+        this.user = AppDataSource.getRepository(User);
     }
 
     public async createOne(user: User): Promise<User> {
-        return this.userRepository.create(user);
+        return this.user.save(user);
     }
 }
 
