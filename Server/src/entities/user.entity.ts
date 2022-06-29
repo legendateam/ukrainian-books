@@ -1,6 +1,6 @@
 import { Column, Entity } from 'typeorm';
 
-import { roleEnum } from '../enums';
+import { RoleEnum } from '../enums';
 import { CommonsFields } from './commons-fields.entity';
 
 @Entity()
@@ -35,7 +35,7 @@ export class User extends CommonsFields {
         type: 'varchar',
         width: 5,
         nullable: true,
-        default: roleEnum.USER,
+        default: RoleEnum.USER,
     })
         role?: string;
 }

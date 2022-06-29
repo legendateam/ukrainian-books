@@ -29,6 +29,7 @@
         "no-shadow": "off",
         "no-unused-vars": "off",
         "no-underscore-dangle": "off",
+        "consistent-return": "off",
         "max-len": ["error", { "code": 140 }]
     },
     "settings": {

@@ -1,17 +1,23 @@
-import { Request, Response } from 'express';
+import { NextFunction } from 'express';
 
-import { userRepository } from '../repositories/user.repository';
+import { userRepository } from '../repositories';
 import { User } from '../entities/user.entity';
+import { HttpMessageEnum, HttpStatusEnum } from '../enums';
+import { IRequestUser, IResponse } from '../interfaces';
 
 class UserController {
-    // eslint-disable-next-line consistent-return
-    public async createOne(req: Request, res: Response): Promise<Response<User> | undefined> {
-        if (req.body) {
-            // @ts-ignore
-            const user = req.body as User;
+    public async createOne(req: IRequestUser, res: IResponse<User>, next: NextFunction): Promise<IResponse<User> | undefined> {
+        try {
+            const { user } = req;
             const userCreated = await userRepository.createOne(user);
-            // @ts-ignore
-            return res.json(userCreated);
+
+            return res.status(HttpStatusEnum.CREATED).json({
+                status: HttpStatusEnum.CREATED,
+                data: userCreated,
+                message: HttpMessageEnum.CREATED,
+            });
+        } catch (e) {
+            next(e);
         }
     }
 }
