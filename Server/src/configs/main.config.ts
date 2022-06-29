@@ -10,7 +10,7 @@ export const mainConfig = {
     PORT_DATABASE: process.env.PORT_DATABASE || 5432,
     PASSWORD_DATABASE: process.env.PORT_DATABASE || 'root',
     DOMAIN_NAME: process.env.DOMAIN_NAME || 'https://my-library.ua/',
-    USER_PASSWORD_SALT_ROUNDS: process.env.USER_SALT_ROUNDS || 7,
+    PASSWORD_SALT_ROUNDS: process.env.PASSWORD_SALT_ROUNDS || 7,
     SECRET_ACCESS_KEY: process.env.SECRET_ACCESS_KEY || 'secret_access',
     SECRET_REFRESH_KEY: process.env.SECRET_REFRESH_KEY || 'secret_refresh',
     SECRET_FORGOT_PASSWORD_KEY: process.env.SECRET_FORGOT_PASSWORD_KEY || 'secret_forgot',
