@@ -1,13 +1,13 @@
 import { NextFunction } from 'express';
 
 import { userRepository } from '../repositories';
-import { User } from '../entities/user.entity';
+import { Users } from '../entities';
 import { HttpMessageEnum, HttpStatusEnum } from '../enums';
 import { IRequestUser, IResponse } from '../interfaces';
 import { IUser } from '../interfaces/user.interface';
 
 class UserController {
-    public async createOne(req: IRequestUser, res: IResponse<User>, next: NextFunction): Promise<IResponse<User> | undefined> {
+    public async createOne(req: IRequestUser, res: IResponse<Users>, next: NextFunction): Promise<IResponse<Users> | undefined> {
         try {
             const user = req.user as IUser;
             const userCreated = await userRepository.createOne(user);

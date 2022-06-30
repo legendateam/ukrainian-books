@@ -4,7 +4,7 @@ import { RoleEnum } from '../enums';
 import { CommonsFields } from './commons-fields.entity';
 
 @Entity()
-export class User extends CommonsFields {
+export class Users extends CommonsFields {
     @Column({
         name: 'nickName',
         type: 'varchar',
@@ -25,6 +25,7 @@ export class User extends CommonsFields {
     @Column({
         name: 'email',
         type: 'varchar',
+        unique: true,
         width: 255,
         nullable: false,
     })
@@ -38,4 +39,13 @@ export class User extends CommonsFields {
         default: RoleEnum.USER,
     })
         role?: string;
+
+    @Column({
+        name: 'avatar',
+        type: 'varchar',
+        width: 255,
+        nullable: true,
+        default: null,
+    })
+        avatar?: string;
 }

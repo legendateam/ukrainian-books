@@ -1,6 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import dayjs, {extend} from "dayjs";
-import utc from 'dayjs/plugin/utc'
+import dayjs, { extend } from 'dayjs';
+import utc from 'dayjs/plugin/utc';
 
 dayjs(extend(utc));
 

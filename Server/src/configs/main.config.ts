@@ -8,7 +8,7 @@ export const mainConfig = {
     USER_NAME_DATABASE: process.env.USER_NAME_DATABASE || 'root',
     HOST_DATABASE: process.env.HOST_DATABASE || 'localhost',
     PORT_DATABASE: process.env.PORT_DATABASE || 5432,
-    PASSWORD_DATABASE: process.env.PORT_DATABASE || 'root',
+    PASSWORD_DATABASE: process.env.PASSWORD_DATABASE || 'root',
     DOMAIN_NAME: process.env.DOMAIN_NAME || 'https://my-library.ua/',
     PASSWORD_SALT_ROUNDS: process.env.PASSWORD_SALT_ROUNDS || 7,
     SECRET_ACCESS_KEY: process.env.SECRET_ACCESS_KEY || 'secret_access',

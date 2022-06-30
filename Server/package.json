@@ -11,7 +11,7 @@
     "migration:run": "npx typeorm-ts-node-commonjs migration:run -d ./src/ormconfig.ts",
     "migration:create": "typeorm migration:create",
     "migration:revert": "typeorm-ts-node-commonjs -d ./src/ormconfig.ts migration:revert",
-    "migration:generate": "npx typeorm-ts-node-esm migration:generate ./src/migrations/update-post-table -d ./src/ormconfig.ts"
+    "migration:generate": "typeorm-ts-node-commonjs -d ./src/ormconfig.ts migration:generate"
   },
   "keywords": [],
   "author": "",
