@@ -1,7 +1,15 @@
-import { Column, Entity } from 'typeorm';
+import {
+    Column, Entity, OneToMany,
+} from 'typeorm';
 
 import { RoleEnum } from '../enums';
 import { CommonsFields } from './commons-fields.entity';
+import { Comments } from './comments.entity';
+import { AlreadyRead } from './already-read.entity';
+import { Favorites } from './favorites.entity';
+import { Likes } from './likes.entity';
+import { Ratings } from './ratings.entity';
+import { WillRead } from './will-read.entity';
 
 @Entity()
 export class Users extends CommonsFields {
@@ -48,4 +56,22 @@ export class Users extends CommonsFields {
         default: null,
     })
         avatar?: string;
+
+    @OneToMany(() => Comments, (comments) => comments.user)
+        comments: Comments[];
+
+    @OneToMany(() => AlreadyRead, (alreadyRead) => alreadyRead.user)
+        alreadyRead: AlreadyRead[];
+
+    @OneToMany(() => WillRead, (willRead) => willRead.user)
+        willRead: WillRead[];
+
+    @OneToMany(() => Favorites, (favorites) => favorites.user)
+        favorites: Favorites[];
+
+    @OneToMany(() => Likes, (likes) => likes.comment)
+        likes: Likes[];
+
+    @OneToMany(() => Ratings, (ratings) => ratings.user)
+        ratings: Ratings[];
 }

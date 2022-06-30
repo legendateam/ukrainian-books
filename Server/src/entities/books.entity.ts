@@ -1,9 +1,18 @@
-import { Column, Entity } from 'typeorm';
+import {
+    Column, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany,
+} from 'typeorm';
 
 import { CommonsFields } from './commons-fields.entity';
+import { AlreadyRead } from './already-read.entity';
+import { Authors } from './authors.entity';
+import { Comments } from './comments.entity';
+import { Favorites } from './favorites.entity';
+import { Genres } from './genres.entity';
+import { Ratings } from './ratings.entity';
+import { WillRead } from './will-read.entity';
 
 @Entity()
-export class BooksEntity extends CommonsFields {
+export class Books extends CommonsFields {
     @Column({
         name: 'name',
         type: 'varchar',
@@ -49,4 +58,34 @@ export class BooksEntity extends CommonsFields {
         default: null,
     })
         fileAudio?: string;
+
+    @Column({
+        name: 'pseudonym',
+        type: 'varchar',
+        width: 255,
+        nullable: false,
+    })
+        pseudonym: string;
+
+    @ManyToMany(() => Genres)
+        genres: Genres[];
+
+    @OneToMany(() => AlreadyRead, (alreadyRead) => alreadyRead.book)
+        alreadyRead: AlreadyRead;
+
+    @OneToMany(() => WillRead, (willRead) => willRead.book)
+        willRead: WillRead;
+
+    @OneToMany(() => Favorites, (favorites) => favorites.book)
+        favorites: Favorites[];
+
+    @OneToMany(() => Comments, (comment) => comment.book)
+        comments: Comments[];
+
+    @ManyToOne(() => Authors, (author) => author.books)
+    @JoinColumn({ name: 'pseudonym' })
+        author: Authors;
+
+    @OneToMany(() => Ratings, (ratings) => ratings.book)
+        ratings: Ratings[];
 }

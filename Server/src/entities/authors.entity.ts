@@ -1,9 +1,13 @@
-import { Column, Entity } from 'typeorm';
+import {
+    Column, Entity, ManyToMany, OneToMany,
+} from 'typeorm';
 
 import { CommonsFields } from './commons-fields.entity';
+import { Books } from './books.entity';
+import { Genres } from './genres.entity';
 
 @Entity()
-export class AuthorsEntity extends CommonsFields {
+export class Authors extends CommonsFields {
     @Column({
         name: 'firstName',
         type: 'varchar',
@@ -25,9 +29,9 @@ export class AuthorsEntity extends CommonsFields {
         type: 'varchar',
         width: 255,
         unique: true,
-        nullable: true,
+        nullable: false,
     })
-        pseudonym?: string;
+        pseudonym: string;
 
     @Column({
         name: 'dateBirthday',
@@ -76,4 +80,10 @@ export class AuthorsEntity extends CommonsFields {
         unique: true,
     })
         photo?: string;
+
+    @OneToMany(() => Books, (books) => books.author)
+        books: Books[];
+
+    @ManyToMany(() => Genres)
+        genres: Genres[];
 }

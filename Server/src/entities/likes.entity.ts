@@ -1,6 +1,10 @@
-import { Column, Entity } from 'typeorm';
+import {
+    Column, Entity, JoinColumn, ManyToOne,
+} from 'typeorm';
 
 import { CommonsFields } from './commons-fields.entity';
+import { Comments } from './comments.entity';
+import { Users } from './users.entity';
 
 @Entity()
 export class Likes extends CommonsFields {
@@ -34,4 +38,12 @@ export class Likes extends CommonsFields {
         unique: true,
     })
         commentId: number;
+
+    @ManyToOne(() => Comments, (comment) => comment.likes)
+    @JoinColumn({ name: 'commentId' })
+        comment: Comments;
+
+    @ManyToOne(() => Users, (user) => user.likes)
+    @JoinColumn({ name: 'userId' })
+        user: Users;
 }
