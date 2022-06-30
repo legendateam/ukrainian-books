@@ -5,5 +5,4 @@ import { userMiddleware } from '../middlewares';
 
 export const userRouter = Router();
 
-// @ts-ignore
 userRouter.post('/', userMiddleware.validationBody, userMiddleware.checkIsAlreadyExists, userController.createOne);

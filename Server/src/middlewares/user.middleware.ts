@@ -5,6 +5,7 @@ import { ErrorHandler } from '../error';
 import { HttpMessageEnum, HttpStatusEnum } from '../enums';
 import { userSchema } from '../utils';
 import { IRequestUser } from '../interfaces';
+import { IUser } from '../interfaces/user.interface';
 
 class UserMiddleware {
     public validationBody(req: IRequestUser, _: Response, next: NextFunction): void {
@@ -25,7 +26,7 @@ class UserMiddleware {
 
     public async checkIsAlreadyExists(req: IRequestUser, _: Response, next: NextFunction): Promise<void> {
         try {
-            const { user } = req;
+            const user = req.user as IUser;
             const userFromDB = await userService.getOneByEmailOrNickName(user);
 
             if (userFromDB) {
