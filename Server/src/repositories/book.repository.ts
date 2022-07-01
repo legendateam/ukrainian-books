@@ -1,7 +1,7 @@
 import { AppDataSource } from '../ormconfig';
 
 import { Books } from '../entities';
-import { IBook } from '../interfaces/book.interface';
+import { IBook } from '../interfaces';
 
 class BookRepository {
     bookRepository;

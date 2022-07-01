@@ -1,5 +1,5 @@
 import {
-    Column, Entity, ManyToMany, OneToMany,
+    Column, Entity, JoinTable, ManyToMany, OneToMany,
 } from 'typeorm';
 
 import { CommonsFields } from './commons-fields.entity';
@@ -35,14 +35,14 @@ export class Authors extends CommonsFields {
 
     @Column({
         name: 'dateBirthday',
-        type: 'timestamp',
+        type: 'date',
         nullable: false,
     })
         dateBirthday: string;
 
     @Column({
         name: 'dateDeath',
-        type: 'timestamp',
+        type: 'date',
         nullable: true,
         default: null,
     })
@@ -85,5 +85,6 @@ export class Authors extends CommonsFields {
         books: Books[];
 
     @ManyToMany(() => Genres)
+        @JoinTable()
         genres: Genres[];
 }
