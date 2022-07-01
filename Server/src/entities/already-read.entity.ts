@@ -4,9 +4,10 @@ import {
 
 import { Users } from './users.entity';
 import { Books } from './books.entity';
+import { CommonsFields } from './commons-fields.entity';
 
 @Entity()
-export class AlreadyRead {
+export class AlreadyRead extends CommonsFields {
     @Column({
         name: 'userId',
         type: 'int',

@@ -25,7 +25,7 @@ export class Authors extends CommonsFields {
         lastName: string;
 
     @Column({
-        name: 'firstName',
+        name: 'pseudonym',
         type: 'varchar',
         width: 255,
         unique: true,

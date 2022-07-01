@@ -1,8 +1,7 @@
 import {
-    Column, Entity, ManyToOne, OneToMany,
+    Column, Entity, ManyToOne, OneToMany, JoinColumn,
 } from 'typeorm';
 
-import { JoinColumn } from 'typeorm/browser';
 import { CommonsFields } from './commons-fields.entity';
 import { Users } from './users.entity';
 import { Books } from './books.entity';
