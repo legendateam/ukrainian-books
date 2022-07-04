@@ -4,11 +4,10 @@ import { userService } from '../services';
 import { ErrorHandler } from '../error';
 import { HttpMessageEnum, HttpStatusEnum } from '../enums';
 import { userSchema } from '../utils';
-import { IRequestUser } from '../interfaces';
-import { IUser } from '../interfaces';
+import { IRequest, IUser } from '../interfaces';
 
 class UserMiddleware {
-    public validationBody(req: IRequestUser, _: Response, next: NextFunction): void {
+    public validationBody(req: IRequest, _: Response, next: NextFunction): void {
         try {
             const { body } = req;
             const { value, error } = userSchema.validate(body);
@@ -24,7 +23,7 @@ class UserMiddleware {
         }
     }
 
-    public async checkIsAlreadyExists(req: IRequestUser, _: Response, next: NextFunction): Promise<void> {
+    public async checkIsAlreadyExists(req: IRequest, _: Response, next: NextFunction): Promise<void> {
         try {
             const user = req.user as IUser;
             const userFromDB = await userService.getOneByEmailOrNickName(user);

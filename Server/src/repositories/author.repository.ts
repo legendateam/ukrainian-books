@@ -1,5 +1,4 @@
-import { AppDataSource } from '../ormconfig';
-
+import { AppDataSource } from '../configs';
 import { Authors } from '../entities';
 import { IAuthor } from '../interfaces';
 

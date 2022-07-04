@@ -1,5 +1,4 @@
-import { AppDataSource } from '../ormconfig';
-
+import { AppDataSource } from '../configs';
 import { Books } from '../entities';
 import { IBook } from '../interfaces';
 

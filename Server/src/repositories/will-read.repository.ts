@@ -1,5 +1,4 @@
-import { AppDataSource } from '../ormconfig';
-
+import { AppDataSource } from '../configs';
 import { WillRead } from '../entities';
 import { IWillRead } from '../interfaces';
 

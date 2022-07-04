@@ -1,8 +1,7 @@
 import express from 'express';
 
-import { AppDataSource } from './ormconfig';
+import { AppDataSource, mainConfig } from './configs';
 import { apiRouter } from './routes';
-import { mainConfig } from './configs';
 
 const app = express();
 

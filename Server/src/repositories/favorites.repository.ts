@@ -1,5 +1,4 @@
-import { AppDataSource } from '../ormconfig';
-
+import { AppDataSource } from '../configs';
 import { IFavorite } from '../interfaces';
 import { Favorites } from '../entities';
 

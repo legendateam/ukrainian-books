@@ -1,5 +1,4 @@
-import { AppDataSource } from '../ormconfig';
-
+import { AppDataSource } from '../configs';
 import { AlreadyRead } from '../entities';
 import { IAlreadyRead } from '../interfaces';
 

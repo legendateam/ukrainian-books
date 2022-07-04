@@ -1,5 +1,4 @@
-import { AppDataSource } from '../ormconfig';
-
+import { AppDataSource } from '../configs';
 import { Likes } from '../entities';
 import { ILike } from '../interfaces';
 

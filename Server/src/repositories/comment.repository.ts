@@ -1,5 +1,4 @@
-import { AppDataSource } from '../ormconfig';
-
+import { AppDataSource } from '../configs';
 import { Comments } from '../entities';
 import { IComment } from '../interfaces';
 

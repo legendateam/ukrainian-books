@@ -1,5 +1,4 @@
-import { AppDataSource } from '../ormconfig';
-
+import { AppDataSource } from '../configs';
 import { Genres } from '../entities';
 import { IGenre } from '../interfaces';
 
