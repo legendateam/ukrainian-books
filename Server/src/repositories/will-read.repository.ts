@@ -10,11 +10,11 @@ class WillReadRepository {
         this.willReadRepository = AppDataSource.getRepository(WillRead);
     }
 
-    public async createOne(willRead: IWillRead): Promise<IWillRead> {
+    public async createOne(willRead: IWillRead): Promise<WillRead> {
         return this.willReadRepository.save(willRead);
     }
 
-    public async getOneByEmailOrNickName(): Promise<IWillRead[] | null> {
+    public async getOneByEmailOrNickName(): Promise<WillRead[] | null> {
         return this.willReadRepository.find();
     }
 }

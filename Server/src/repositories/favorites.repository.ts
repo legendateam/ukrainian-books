@@ -1,6 +1,6 @@
 import { AppDataSource } from '../ormconfig';
 
-import { IFavorite } from '../interfaces/favorite.interface';
+import { IFavorite } from '../interfaces';
 import { Favorites } from '../entities';
 
 class FavoritesRepository {
@@ -10,11 +10,11 @@ class FavoritesRepository {
         this.favoritesRepository = AppDataSource.getRepository(Favorites);
     }
 
-    public async createOne(favorite: IFavorite): Promise<IFavorite> {
+    public async createOne(favorite: IFavorite): Promise<Favorites> {
         return this.favoritesRepository.save(favorite);
     }
 
-    public async getOneByEmailOrNickName(): Promise<IFavorite[] | null> {
+    public async getOneByEmailOrNickName(): Promise<Favorites[] | null> {
         return this.favoritesRepository.find();
     }
 }

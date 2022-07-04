@@ -1,7 +1,7 @@
 import { AppDataSource } from '../ormconfig';
 
 import { AlreadyRead } from '../entities';
-import { IAlreadyRead } from '../interfaces/already-read.interface';
+import { IAlreadyRead } from '../interfaces';
 
 class AlreadyReadRepository {
     alreadyReadRepository;

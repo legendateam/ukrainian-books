@@ -1,7 +1,7 @@
 import { AppDataSource } from '../ormconfig';
 
 import { Authors } from '../entities';
-import { IAuthor } from '../interfaces/author.interface';
+import { IAuthor } from '../interfaces';
 
 class AuthorRepository {
     authorRepository;

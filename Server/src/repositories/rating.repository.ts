@@ -1,7 +1,7 @@
 import { AppDataSource } from '../ormconfig';
 
 import { Ratings } from '../entities';
-import { IRating } from '../interfaces/rating.interface';
+import { IRating } from '../interfaces';
 
 class RatingRepository {
     ratingRepository;
@@ -10,11 +10,11 @@ class RatingRepository {
         this.ratingRepository = AppDataSource.getRepository(Ratings);
     }
 
-    public async createOne(rating: IRating): Promise<IRating> {
+    public async createOne(rating: IRating): Promise<Ratings> {
         return this.ratingRepository.save(rating);
     }
 
-    public async getOneByEmailOrNickName(): Promise<IRating[] | null> {
+    public async getOneByEmailOrNickName(): Promise<Ratings[] | null> {
         return this.ratingRepository.find();
     }
 }

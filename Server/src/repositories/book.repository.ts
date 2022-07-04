@@ -10,11 +10,11 @@ class BookRepository {
         this.bookRepository = AppDataSource.getRepository(Books);
     }
 
-    public async createOne(book: IBook): Promise<IBook> {
+    public async createOne(book: IBook): Promise<Books> {
         return this.bookRepository.save(book);
     }
 
-    public async getOneByEmailOrNickName(): Promise<IBook[] | null> {
+    public async getOneByEmailOrNickName(): Promise<Books[] | null> {
         return this.bookRepository.find();
     }
 }

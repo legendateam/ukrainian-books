@@ -3,10 +3,9 @@ import { NextFunction } from 'express';
 import { userRepository } from '../repositories';
 import { Users } from '../entities';
 import { HttpMessageEnum, HttpStatusEnum } from '../enums';
-import { IRequestUser, IResponse } from '../interfaces';
-import { IUser } from '../interfaces/user.interface';
+import { IRequestUser, IResponse, IUser } from '../interfaces';
 
-class UserController {
+class UsersController {
     public async createOne(req: IRequestUser, res: IResponse<Users>, next: NextFunction): Promise<IResponse<Users> | undefined> {
         try {
             const user = req.user as IUser;
@@ -23,4 +22,4 @@ class UserController {
     }
 }
 
-export const userController = new UserController();
+export const usersController = new UsersController();

@@ -2,96 +2,31 @@ import {
     Request, Response, NextFunction, Router,
 } from 'express';
 
-import { userRouter } from './user.router';
+import { usersRouter } from './users.router';
 import { HttpMessageEnum, HttpStatusEnum } from '../enums';
 import { ErrorHandler } from '../error';
-import {
-    alreadyReadRepository,
-    authorRepository,
-    bookRepository,
-    commentRepository,
-    favoritesRepository, genreRepository, likeRepository, ratingRepository,
-    willReadRepository,
-} from '../repositories';
+import { willReadRouter } from './will-read.router';
+import { authorsRouter } from './authors.router';
+import { booksRouter } from './books.router';
+import { commentsRouter } from './comments.router';
+import { favoritesRouter } from './favorites.router';
+import { genresRouter } from './genres.router';
+import { likesRouter } from './likes.router';
+import { ratingsRouter } from './ratings.router';
+import { alreadyReadRouter } from './already-read.router';
 
 export const apiRouter = Router();
 
-apiRouter.use('/users', userRouter);
-apiRouter.post('/willRead', async (req, res) => {
-    try {
-        const willReadPromise = await willReadRepository.createOne(req.body);
-        res.json(willReadPromise);
-    } catch (e) {
-        console.log(e);
-    }
-});
-apiRouter.post('/authors', async (req, res) => {
-    try {
-        const willReadPromise = await authorRepository.createOne(req.body);
-        res.json(willReadPromise);
-    //
-    } catch (e) {
-        console.log(e);
-    }
-});
-apiRouter.post('/books', async (req, res) => {
-    //
-    try {
-        const willReadPromise = await bookRepository.createOne(req.body);
-        res.json(willReadPromise);
-    } catch (e) {
-        console.log(e);
-    }
-});
-apiRouter.post('/comments', async (req, res) => {
-    try {
-        const willReadPromise = await commentRepository.createOne(req.body);
-        res.json(willReadPromise);
-    } catch (e) {
-        console.log(e);
-    }
-});
-apiRouter.post('/favorites', async (req, res) => {
-    try {
-        const willReadPromise = await favoritesRepository.createOne(req.body);
-        res.json(willReadPromise);
-    } catch (e) {
-        console.log(e);
-    }
-});
-apiRouter.post('/genres', async (req, res) => {
-    try {
-        const willReadPromise = await genreRepository.createOne(req.body);
-        res.json(willReadPromise);
-    } catch (e) {
-        console.log(e);
-    }
-});
-apiRouter.post('/likes', async (req, res) => {
-    try {
-        const willReadPromise = await likeRepository.createOne(req.body);
-        res.json(willReadPromise);
-    //
-    } catch (e) {
-        console.log(e);
-    }
-});
-apiRouter.post('/ratings', async (req, res) => {
-    try {
-        const willReadPromise = await ratingRepository.createOne(req.body);
-        res.json(willReadPromise);
-    } catch (e) {
-        console.log(e);
-    }
-});
-apiRouter.post('/alreadyread', async (req, res) => {
-    try {
-        const willReadPromise = await alreadyReadRepository.createOne(req.body);
-        res.json(willReadPromise);
-    } catch (e) {
-        console.log(e);
-    }
-});
+apiRouter.use('/users', usersRouter);
+apiRouter.use('/willRead', willReadRouter);
+apiRouter.use('/authors', authorsRouter);
+apiRouter.use('/books', booksRouter);
+apiRouter.use('/comments', commentsRouter);
+apiRouter.use('/favorites', favoritesRouter);
+apiRouter.use('/genres', genresRouter);
+apiRouter.use('/likes', likesRouter);
+apiRouter.use('/ratings', ratingsRouter);
+apiRouter.use('/alreadyread', alreadyReadRouter);
 
 // @ts-ignore
 apiRouter.use('*', (err: ErrorHandler, req: Request, res: Response, next: NextFunction) => {

@@ -1,7 +1,7 @@
 import { AppDataSource } from '../ormconfig';
 
 import { Genres } from '../entities';
-import { IGenre } from '../interfaces/genre.interface';
+import { IGenre } from '../interfaces';
 
 class GenreRepository {
     genreRepository;
@@ -10,11 +10,11 @@ class GenreRepository {
         this.genreRepository = AppDataSource.getRepository(Genres);
     }
 
-    public async createOne(genre: IGenre): Promise<IGenre> {
+    public async createOne(genre: IGenre): Promise<Genres> {
         return this.genreRepository.save(genre);
     }
 
-    public async getOneByEmailOrNickName(): Promise<IGenre[] | null> {
+    public async getOneByEmailOrNickName(): Promise<Genres[] | null> {
         return this.genreRepository.find();
     }
 }

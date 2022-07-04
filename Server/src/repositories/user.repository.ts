@@ -1,6 +1,6 @@
 import { AppDataSource } from '../ormconfig';
 import { Users } from '../entities';
-import { IUser } from '../interfaces/user.interface';
+import { IUser } from '../interfaces';
 
 class UserRepository {
     userRepository;

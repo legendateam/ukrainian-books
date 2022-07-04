@@ -1,7 +1,7 @@
 import { AppDataSource } from '../ormconfig';
 
 import { Comments } from '../entities';
-import { IComment } from '../interfaces/comment.interface';
+import { IComment } from '../interfaces';
 
 class CommentRepository {
     commentRepository;
@@ -10,11 +10,11 @@ class CommentRepository {
         this.commentRepository = AppDataSource.getRepository(Comments);
     }
 
-    public async createOne(comment: IComment): Promise<IComment> {
+    public async createOne(comment: IComment): Promise<Comments> {
         return this.commentRepository.save(comment);
     }
 
-    public async getOneByEmailOrNickName(): Promise<IComment[] | null> {
+    public async getOneByEmailOrNickName(): Promise<Comments[] | null> {
         return this.commentRepository.find();
     }
 }
