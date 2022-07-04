@@ -5,11 +5,11 @@ import { mainConfig } from './main.config';
 
 export const AppDataSource = new DataSource({
     type: 'postgres',
-    host: mainConfig.HOST_DATABASE,
-    port: Number(mainConfig.PORT_DATABASE),
-    username: mainConfig.USER_NAME_DATABASE,
-    password: mainConfig.PASSWORD_DATABASE,
-    database: mainConfig.NAME_DATABASE,
+    host: mainConfig.PG_HOST_DATABASE,
+    port: Number(mainConfig.PG_PORT_DATABASE),
+    username: mainConfig.PG_USER_NAME_DATABASE,
+    password: mainConfig.PG_PASSWORD_DATABASE,
+    database: mainConfig.PG_NAME_DATABASE,
     synchronize: false,
     logging: false,
     migrations: [
