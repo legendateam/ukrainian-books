@@ -1,12 +1,12 @@
 import { NextFunction } from 'express';
 
-import { IAlreadyRead, IRequestAlreadyRead, IResponse } from '../interfaces';
+import { IAlreadyRead, IRequest, IResponse } from '../interfaces';
 import { AlreadyRead } from '../entities';
 import { HttpMessageEnum, HttpStatusEnum } from '../enums';
 import { alreadyReadRepository } from '../repositories';
 
 class AlreadyReadController {
-    public async createOne(req: IRequestAlreadyRead, res: IResponse<AlreadyRead>, next: NextFunction)
+    public async createOne(req: IRequest, res: IResponse<AlreadyRead>, next: NextFunction)
         : Promise<IResponse<AlreadyRead> | undefined> {
         try {
             const alreadyReadBook = req.alreadyReadBook as IAlreadyRead;

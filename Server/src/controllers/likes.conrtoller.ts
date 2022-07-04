@@ -1,12 +1,12 @@
 import { NextFunction } from 'express';
 
-import { ILike, IRequestLike, IResponse } from '../interfaces';
+import { ILike, IRequest, IResponse } from '../interfaces';
 import { Likes } from '../entities';
 import { likeRepository } from '../repositories';
 import { HttpMessageEnum, HttpStatusEnum } from '../enums';
 
 class LikesController {
-    public async createOne(req: IRequestLike, res: IResponse<Likes>, next: NextFunction) {
+    public async createOne(req: IRequest, res: IResponse<Likes>, next: NextFunction) {
         try {
             const like = req.like as ILike;
             const likeCreated = await likeRepository.createOne(like);

@@ -1,12 +1,12 @@
 import { NextFunction } from 'express';
 
-import { IFavorite, IRequestFavorites, IResponse } from '../interfaces';
+import {IFavorite, IRequest, IResponse} from '../interfaces';
 import { Favorites } from '../entities';
 import { favoritesRepository } from '../repositories';
 import { HttpMessageEnum, HttpStatusEnum } from '../enums';
 
 class FavoritesController {
-    public async createOne(req: IRequestFavorites, res: IResponse<Favorites>, next: NextFunction)
+    public async createOne(req: IRequest, res: IResponse<Favorites>, next: NextFunction)
         : Promise<IResponse<Favorites> | undefined> {
         try {
             const favorite = req.favorite as IFavorite;

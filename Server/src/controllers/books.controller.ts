@@ -1,13 +1,12 @@
 import { NextFunction } from 'express';
 
 import { Books } from '../entities';
-import { IBook, IResponse } from '../interfaces';
-import { IRequestBook } from '../interfaces';
+import { IBook, IRequest, IResponse } from '../interfaces';
 import { bookRepository } from '../repositories';
 import { HttpMessageEnum, HttpStatusEnum } from '../enums';
 
 class BooksController {
-    public async createOne(req: IRequestBook, res: IResponse<Books>, next: NextFunction): Promise<IResponse<Books> | undefined> {
+    public async createOne(req: IRequest, res: IResponse<Books>, next: NextFunction): Promise<IResponse<Books> | undefined> {
         try {
             const book = req.book as IBook;
             const bookCreated = await bookRepository.createOne(book);

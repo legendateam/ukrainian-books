@@ -1,13 +1,12 @@
 import { NextFunction } from 'express';
 
-import { IAuthor, IResponse } from '../interfaces';
+import { IAuthor, IRequest, IResponse } from '../interfaces';
 import { Authors } from '../entities';
-import { IRequestAuthor } from '../interfaces';
 import { HttpMessageEnum, HttpStatusEnum } from '../enums';
 import { authorRepository } from '../repositories';
 
 class AuthorsController {
-    public async createOne(req: IRequestAuthor, res: IResponse<Authors>, next: NextFunction): Promise<IResponse<Authors> | undefined> {
+    public async createOne(req: IRequest, res: IResponse<Authors>, next: NextFunction): Promise<IResponse<Authors> | undefined> {
         try {
             const author = req.author as IAuthor;
 

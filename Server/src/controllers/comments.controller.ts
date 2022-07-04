@@ -1,12 +1,12 @@
 import { NextFunction } from 'express';
 
-import { IComment, IRequestComment, IResponse } from '../interfaces';
+import {IComment, IRequest, IResponse} from '../interfaces';
 import { Comments } from '../entities';
 import { HttpMessageEnum, HttpStatusEnum } from '../enums';
 import { commentRepository } from '../repositories';
 
 class CommentsController {
-    public async createOne(req: IRequestComment, res: IResponse<Comments>, next: NextFunction)
+    public async createOne(req: IRequest, res: IResponse<Comments>, next: NextFunction)
         : Promise<IResponse<Comments> | undefined> {
         try {
             const comment = req.comment as IComment;
