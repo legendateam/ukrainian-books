@@ -1,5 +1,5 @@
 import { userRepository } from '../repositories';
-import { IUser } from '../interfaces/user.interface';
+import { IUser } from '../interfaces';
 
 export class UserService {
     getOneByEmailOrNickName(data: IUser): any {
