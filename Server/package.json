@@ -8,10 +8,10 @@
     "lint": "eslint --cache --ext .js,.ts src",
     "lint:fix": "npm run lint -- --fix",
     "start:dev": "rimraf dist && tsc-watch --onSuccess \"nodemon ./src/app.ts\"",
-    "migration:run": "npx typeorm-ts-node-commonjs migration:run -d ./src/ormconfig.ts",
+    "migration:run": "npx typeorm-ts-node-commonjs migration:run -d ./src/configs/ormconfig.ts",
     "migration:create": "typeorm migration:create",
-    "migration:revert": "typeorm-ts-node-commonjs -d ./src/ormconfig.ts migration:revert",
-    "migration:generate": "typeorm-ts-node-commonjs -d ./src/ormconfig.ts migration:generate"
+    "migration:revert": "typeorm-ts-node-commonjs -d ./src/configs/ormconfig.ts migration:revert",
+    "migration:generate": "typeorm-ts-node-commonjs -d ./src/configs/ormconfig.ts migration:generate"
   },
   "keywords": [],
   "author": "",
