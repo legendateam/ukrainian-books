@@ -29,7 +29,7 @@ export class Authors extends CommonsFields {
         type: 'varchar',
         width: 255,
         unique: true,
-        nullable: false,
+        nullable: true,
     })
         pseudonym: string;
 

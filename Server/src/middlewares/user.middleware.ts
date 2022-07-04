@@ -5,7 +5,7 @@ import { ErrorHandler } from '../error';
 import { HttpMessageEnum, HttpStatusEnum } from '../enums';
 import { userSchema } from '../utils';
 import { IRequestUser } from '../interfaces';
-import { IUser } from '../interfaces/user.interface';
+import { IUser } from '../interfaces';
 
 class UserMiddleware {
     public validationBody(req: IRequestUser, _: Response, next: NextFunction): void {
