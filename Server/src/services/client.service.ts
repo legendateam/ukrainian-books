@@ -10,8 +10,8 @@ class ClientService {
         })();
     }
 
-    public async get(data: string): Promise<string | null> {
-        return this.client.get(data);
+    public async get(key: string): Promise<string | null> {
+        return this.client.get(key);
     }
 
     public async set(key: string, data: string): Promise<string | null> {
