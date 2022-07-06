@@ -32,8 +32,8 @@ class AuthController {
             const refresh = jwtService.sign({ id: user?.id, nickName: user?.nickName, role: user?.role }, 'refresh');
 
             await clientService.set(`${user?.nickName}`, JSON.stringify({ access, refresh }));
-            const newVar = await clientService.get(`${user?.nickName}`) as string;
-            const { access: redisAccess, refresh: redisRefresh } = JSON.parse(newVar);
+            const userTokens = await clientService.get(`${user?.nickName}`) as string;
+            const { access: redisAccess, refresh: redisRefresh } = JSON.parse(userTokens);
             console.log(redisAccess, redisRefresh);
 
             return res.status(HttpStatusEnum.OK).json({
