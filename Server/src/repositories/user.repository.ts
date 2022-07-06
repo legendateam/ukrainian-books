@@ -13,13 +13,10 @@ class UserRepository {
         return this.userRepository.save(user);
     }
 
-    public async getOneByEmailOrNickName({ email, nickName }: IUser): Promise<Users | null> {
-        return this.userRepository.findOne({
-            where: [
-                { email },
-                { nickName },
-            ],
-        });
+    public async getOneByEmailOrNickName({ email }: any): Promise<Users | null> {
+        return this.userRepository.createQueryBuilder('user')
+            .where('user.email = :email', { email })
+            .getOne();
     }
 }
 

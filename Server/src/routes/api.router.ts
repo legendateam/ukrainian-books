@@ -14,10 +14,12 @@ import { genresRouter } from './genres.router';
 import { likesRouter } from './likes.router';
 import { ratingsRouter } from './ratings.router';
 import { alreadyReadRouter } from './already-read.router';
+import { authRouter } from './auth.router';
 
 export const apiRouter = Router();
 
 apiRouter.use('/users', usersRouter);
+apiRouter.use('/auth', authRouter);
 apiRouter.use('/willRead', willReadRouter);
 apiRouter.use('/authors', authorsRouter);
 apiRouter.use('/books', booksRouter);
