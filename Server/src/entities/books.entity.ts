@@ -1,5 +1,5 @@
 import {
-    Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany,
+    Column, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany,
 } from 'typeorm';
 
 import { CommonsFields } from './commons-fields.entity';
@@ -66,8 +66,7 @@ export class Books extends CommonsFields {
     })
         authorId: number;
 
-    @ManyToMany(() => Genres, (genre) => genre.books)
-    @JoinTable()
+    @ManyToMany(() => Genres, (genres) => genres.books)
         genres: Genres[];
 
     @OneToMany(() => AlreadyRead, (alreadyRead) => alreadyRead.book)

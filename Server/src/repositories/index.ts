@@ -4,7 +4,6 @@ export * from './book.repository';
 export * from './comment.repository';
 export * from './favorites.repository';
 export * from './genre.repository';
-export * from './like.repository';
 export * from './rating.repository';
 export * from './user.repository';
 export * from './will-read.repository';

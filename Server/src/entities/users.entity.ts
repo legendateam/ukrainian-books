@@ -7,7 +7,6 @@ import { CommonsFields } from './commons-fields.entity';
 import { Comments } from './comments.entity';
 import { AlreadyRead } from './already-read.entity';
 import { Favorites } from './favorites.entity';
-import { Likes } from './likes.entity';
 import { Ratings } from './ratings.entity';
 import { WillRead } from './will-read.entity';
 
@@ -68,9 +67,6 @@ export class Users extends CommonsFields {
 
     @OneToMany(() => Favorites, (favorites) => favorites.user)
         favorites: Favorites[];
-
-    @OneToMany(() => Likes, (likes) => likes.comment)
-        likes: Likes[];
 
     @OneToMany(() => Ratings, (ratings) => ratings.user)
         ratings: Ratings[];

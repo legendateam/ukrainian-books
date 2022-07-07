@@ -1,6 +1,6 @@
 import { NextFunction } from 'express';
 
-import {IComment, IRequest, IResponse} from '../interfaces';
+import { IComment, IRequest, IResponse } from '../interfaces';
 import { Comments } from '../entities';
 import { HttpMessageEnum, HttpStatusEnum } from '../enums';
 import { commentRepository } from '../repositories';

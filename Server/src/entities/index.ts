@@ -5,7 +5,6 @@ export * from './comments.entity';
 export * from './commons-fields.entity';
 export * from './favorites.entity';
 export * from './genres.entity';
-export * from './likes.entity';
 export * from './ratings.entity';
 export * from './users.entity';
 export * from './will-read.entity';

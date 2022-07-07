@@ -11,7 +11,6 @@ import { booksRouter } from './books.router';
 import { commentsRouter } from './comments.router';
 import { favoritesRouter } from './favorites.router';
 import { genresRouter } from './genres.router';
-import { likesRouter } from './likes.router';
 import { ratingsRouter } from './ratings.router';
 import { alreadyReadRouter } from './already-read.router';
 import { authRouter } from './auth.router';
@@ -26,7 +25,6 @@ apiRouter.use('/books', booksRouter);
 apiRouter.use('/comments', commentsRouter);
 apiRouter.use('/favorites', favoritesRouter);
 apiRouter.use('/genres', genresRouter);
-apiRouter.use('/likes', likesRouter);
 apiRouter.use('/ratings', ratingsRouter);
 apiRouter.use('/alreadyread', alreadyReadRouter);
 

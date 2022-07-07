@@ -8,7 +8,7 @@ import { HttpMessageEnum, HttpStatusEnum } from '../enums';
 class BooksController {
     public async createOne(req: IRequest, res: IResponse<Books>, next: NextFunction): Promise<IResponse<Books> | undefined> {
         try {
-            const book = req.book as IBook;
+            const book = req.body as IBook;
             const bookCreated = await bookRepository.createOne(book);
 
             return res.status(HttpStatusEnum.CREATED).json({

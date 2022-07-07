@@ -4,5 +4,4 @@ import { booksController } from '../controllers';
 
 export const booksRouter = Router();
 
-// @ts-ignore
 booksRouter.post('/', booksController.createOne);

@@ -1,11 +1,10 @@
 import {
-    Column, Entity, ManyToOne, OneToMany, JoinColumn,
+    Column, Entity, ManyToOne, JoinColumn,
 } from 'typeorm';
 
 import { CommonsFields } from './commons-fields.entity';
 import { Users } from './users.entity';
 import { Books } from './books.entity';
-import { Likes } from './likes.entity';
 
 @Entity()
 export class Comments extends CommonsFields {
@@ -37,7 +36,4 @@ export class Comments extends CommonsFields {
     @ManyToOne(() => Books, (books) => books.comments)
     @JoinColumn({ name: 'bookId' })
         book: Books;
-
-    @OneToMany(() => Likes, (likes) => likes.comment)
-        likes: Likes[];
 }

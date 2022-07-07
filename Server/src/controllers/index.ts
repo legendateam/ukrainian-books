@@ -5,7 +5,6 @@ export * from './books.controller';
 export * from './comments.controller';
 export * from './favorites.controller';
 export * from './genres.controller';
-export * from './likes.conrtoller';
 export * from './ratings.conrtoller';
 export * from './users.controller';
 export * from './will-read.controller';

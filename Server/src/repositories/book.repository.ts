@@ -10,7 +10,9 @@ class BookRepository {
     }
 
     public async createOne(book: IBook): Promise<Books> {
-        return this.bookRepository.save(book);
+        const id = [] as any;
+        book.genres.forEach((genre) => id.push({ id: genre }));
+        return this.bookRepository.save({ ...book, genres: id });
     }
 
     public async getOneByEmailOrNickName(): Promise<Books[] | null> {

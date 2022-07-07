@@ -6,7 +6,6 @@ export * from './books.router';
 export * from './comments.router';
 export * from './favorites.router';
 export * from './genres.router';
-export * from './likes.router';
 export * from './ratings.router';
 export * from './users.router';
 export * from './will-read.router';
