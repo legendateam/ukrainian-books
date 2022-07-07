@@ -17,7 +17,7 @@ export class Genres extends CommonsFields {
     })
         name: string;
 
-    @ManyToMany(() => Authors)
+    @ManyToMany(() => Authors, (authors) => authors.genres)
     @JoinTable()
         authors: Authors[];
 

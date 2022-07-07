@@ -21,6 +21,16 @@ class UserRepository {
             ],
         });
     }
+
+    public async getAll(): Promise<Users[]> {
+        return this.userRepository.createQueryBuilder('users')
+            .leftJoinAndSelect('users.comments', 'comments')
+            .leftJoinAndSelect('users.alreadyRead', 'alreadyRead')
+            .leftJoinAndSelect('users.willRead', 'willRead')
+            .leftJoinAndSelect('users.favorites', 'favorites')
+            .leftJoinAndSelect('users.ratings', 'ratings')
+            .getMany();
+    }
 }
 
 export const userRepository = new UserRepository();

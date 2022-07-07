@@ -13,8 +13,11 @@ class GenreRepository {
         return this.genreRepository.save(genre);
     }
 
-    public async getAll(): Promise<Genres[] | null> {
-        return this.genreRepository.find();
+    public async getAll(): Promise<Genres[]> {
+        return this.genreRepository.createQueryBuilder('genres')
+            .leftJoinAndSelect('genres.authors', 'authors')
+            .leftJoinAndSelect('genres.books', 'books')
+            .getMany();
     }
 
     public async getOneById(id: number, limit: number): Promise<Genres | null> {

@@ -18,7 +18,6 @@ export class Favorites extends CommonsFields {
     @Column({
         name: 'bookId',
         type: 'int',
-        unique: true,
         nullable: false,
     })
         bookId: number;

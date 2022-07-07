@@ -5,3 +5,4 @@ import { commentsController } from '../controllers';
 export const commentsRouter = Router();
 
 commentsRouter.post('/', commentsController.createOne);
+commentsRouter.post('/likes', commentsController.addAction);

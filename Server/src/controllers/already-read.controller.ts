@@ -9,7 +9,7 @@ class AlreadyReadController {
     public async createOne(req: IRequest, res: IResponse<AlreadyRead>, next: NextFunction)
         : Promise<IResponse<AlreadyRead> | undefined> {
         try {
-            const alreadyReadBook = req.alreadyReadBook as IAlreadyRead;
+            const alreadyReadBook = req.body as IAlreadyRead;
 
             const alreadyReadBookFromDB = await alreadyReadRepository.createOne(alreadyReadBook);
             return res.status(HttpStatusEnum.CREATED).json({

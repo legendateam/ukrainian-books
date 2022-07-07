@@ -20,5 +20,18 @@ class BooksController {
             next(e);
         }
     }
+
+    public async getAll(_: IRequest, res: IResponse<Books[]>, next: NextFunction): Promise<IResponse<Books[]> | undefined> {
+        try {
+            const books = await bookRepository.getAll();
+            return res.status(HttpStatusEnum.OK).json({
+                status: HttpStatusEnum.OK,
+                data: books,
+                message: HttpMessageEnum.OK,
+            });
+        } catch (e) {
+            next(e);
+        }
+    }
 }
 export const booksController = new BooksController();

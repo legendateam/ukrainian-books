@@ -37,5 +37,19 @@ class GenresController {
             next(e);
         }
     }
+
+    public async getAll(_: IRequest, res: IResponse<Genres[]>, next: NextFunction): Promise<IResponse<Genres[]> | undefined> {
+        try {
+            const genres = await genreRepository.getAll();
+
+            return res.status(HttpStatusEnum.OK).json({
+                status: HttpStatusEnum.OK,
+                data: genres,
+                message: HttpMessageEnum.OK,
+            });
+        } catch (e) {
+            next(e);
+        }
+    }
 }
 export const genresController = new GenresController();

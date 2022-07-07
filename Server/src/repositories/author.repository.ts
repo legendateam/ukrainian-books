@@ -16,6 +16,13 @@ class AuthorRepository {
     public async getOneByEmailOrNickName(): Promise<Authors[] | null> {
         return this.authorRepository.find();
     }
+
+    public async getAll(): Promise<Authors[]> {
+        return this.authorRepository.createQueryBuilder('authors')
+            .leftJoinAndSelect('authors.books', 'books')
+            .leftJoinAndSelect('authors.genres', 'genres')
+            .getMany();
+    }
 }
 
 export const authorRepository = new AuthorRepository();

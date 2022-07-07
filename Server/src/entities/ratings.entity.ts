@@ -12,7 +12,6 @@ export class Ratings extends CommonsFields {
         name: 'rate',
         type: 'int',
         nullable: false,
-        update: true,
     })
         rate: number;
 
@@ -27,12 +26,11 @@ export class Ratings extends CommonsFields {
         name: 'bookId',
         type: 'int',
         nullable: false,
-        unique: true,
     })
         bookId: number;
 
     @ManyToOne(() => Books, (books) => books.ratings)
-    @JoinColumn({ name: 'commentId' })
+    @JoinColumn({ name: 'bookId' })
         book: Books;
 
     @ManyToOne(() => Users, (user) => user.ratings)

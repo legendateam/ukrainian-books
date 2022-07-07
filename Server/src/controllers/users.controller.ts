@@ -9,7 +9,7 @@ import { bcryptService } from '../services';
 class UsersController {
     public async createOne(req: IRequest, res: IResponse<Users>, next: NextFunction): Promise<IResponse<Users> | undefined> {
         try {
-            const user = req.user as IUser;
+            const user = req.body as IUser;
             const hashedPassword = await bcryptService.hash(user.password);
 
             const userCreated = await userRepository.createOne({ ...user, password: hashedPassword });
@@ -18,6 +18,19 @@ class UsersController {
                 status: HttpStatusEnum.CREATED,
                 data: userCreated,
                 message: HttpMessageEnum.CREATED,
+            });
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    public async getAll(_: IRequest, res: IResponse<Users[]>, next: NextFunction): Promise<IResponse<Users[]> | undefined> {
+        try {
+            const users = await userRepository.getAll();
+            return res.status(HttpStatusEnum.OK).json({
+                status: HttpStatusEnum.OK,
+                data: users,
+                message: HttpMessageEnum.OK,
             });
         } catch (e) {
             next(e);

@@ -6,9 +6,23 @@ import { HttpMessageEnum, HttpStatusEnum } from '../enums';
 import { authorRepository } from '../repositories';
 
 class AuthorsController {
+    public async getAll(_: IRequest, res: IResponse<Authors[]>, next: NextFunction): Promise<IResponse<Authors[]> | undefined> {
+        try {
+            const authors = await authorRepository.getAll();
+
+            return res.status(HttpStatusEnum.OK).json({
+                status: HttpStatusEnum.OK,
+                data: authors,
+                message: HttpMessageEnum.OK,
+            });
+        } catch (e) {
+            next(e);
+        }
+    }
+
     public async createOne(req: IRequest, res: IResponse<Authors>, next: NextFunction): Promise<IResponse<Authors> | undefined> {
         try {
-            const author = req.author as IAuthor;
+            const author = req.body as IAuthor;
 
             const authorCreated = await authorRepository.createOne(author);
 
