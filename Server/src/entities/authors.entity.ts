@@ -85,6 +85,6 @@ export class Authors extends CommonsFields {
         books: Books[];
 
     @ManyToMany(() => Genres, (genres) => genres.authors)
-        @JoinTable()
+    @JoinTable()
         genres: Genres[];
 }
