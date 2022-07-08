@@ -6,10 +6,11 @@ import { IBook } from '../book.interface';
 import { IComment } from '../comment.interface';
 import { IFavorite } from '../favorite.interface';
 import { IGenre } from '../genre.interface';
-import { ILike } from '../like.interface';
+import { ILogin } from '../login.interface';
 import { IRating } from '../rating.interface';
 import { IUser } from '../user.interface';
 import { IWillRead } from '../will-read.interface';
+import { Users } from '../../entities';
 
 export interface IRequest extends Request{
     alreadyReadBook?: IAlreadyRead,
@@ -18,8 +19,11 @@ export interface IRequest extends Request{
     comment?: IComment,
     favorite?: IFavorite,
     genre?: IGenre,
-    like?: ILike,
     rating?: IRating,
-    user?: IUser,
-    willRead?: IWillRead
+    user?: IUser | Users,
+    willRead?: IWillRead,
+    login?: ILogin,
+    clientKey?: string,
+    authorization?: string,
+    email?: string,
 }

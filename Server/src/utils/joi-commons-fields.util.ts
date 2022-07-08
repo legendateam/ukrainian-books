@@ -1,6 +1,6 @@
 import Joi from 'joi';
 
-export const joiCommonValidatorsUtil = {
+export const joiCommonsFieldsUtil = {
     email: Joi.string()
         .email()
         .min(5)

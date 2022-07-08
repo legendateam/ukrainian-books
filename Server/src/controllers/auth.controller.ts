@@ -1,48 +1,64 @@
 import { NextFunction } from 'express';
 
-import { IRequest, IResponse } from '../interfaces';
-import { userRepository } from '../repositories';
-import { bcryptService, clientService, jwtService } from '../services';
+import { IRequest, IResponse, IUser } from '../interfaces';
+import { authService, clientService, jwtService } from '../services';
+import { HttpMessageEnum, HttpStatusEnum, TokensEnum } from '../enums';
+import { Users } from '../entities';
 import { ErrorHandler } from '../error';
-import { HttpMessageEnum, HttpStatusEnum } from '../enums';
+import { errorMessageConstant } from '../constants';
 
 class AuthController {
-    public async login(req: IRequest, res: IResponse<any>, next: NextFunction): Promise<IResponse<any> | undefined> {
+    public async login(req: IRequest, res: IResponse<string[]>, next: NextFunction): Promise<IResponse<string[]> | undefined> {
         try {
-            const { email, password } = req.body;
+            const { role, id, nickName } = req.user as Users;
+            const clientKey = req.clientKey as string;
 
-            const user = await userRepository.getOneByEmailOrNickName({ email });
+            const access = jwtService.sign({ id, nickName, role });
+            const refresh = jwtService.sign({ id, nickName, role }, TokensEnum.REFRESH);
 
-            if (!user) {
-                next(new ErrorHandler('User not exist, please registration', HttpStatusEnum.NOT_FOUND, HttpMessageEnum.NOT_FOUND));
+            const savingResult = await clientService.set(clientKey, JSON.stringify({ access, refresh }));
+
+            if (!savingResult) {
+                next(new ErrorHandler(errorMessageConstant.unknown, HttpStatusEnum.NOT_IMPLEMENTED, HttpMessageEnum.NOT_IMPLEMENTED));
+                return;
             }
-
-            // @ts-ignore
-            const checkedPassword = await bcryptService.compare(password, user.password);
-
-            if (!checkedPassword) {
-                next(new ErrorHandler(
-                    'email or password is invalid',
-                    HttpStatusEnum.UNAUTHORIZED,
-                    HttpMessageEnum.UNAUTHORIZED,
-                ));
-            }
-
-            const access = jwtService.sign({ id: user?.id, nickName: user?.nickName, role: user?.role });
-            const refresh = jwtService.sign({ id: user?.id, nickName: user?.nickName, role: user?.role }, 'refresh');
-
-            await clientService.set(`${user?.nickName}`, JSON.stringify({ access, refresh }));
-            const userTokens = await clientService.get(`${user?.nickName}`) as string;
-            const { access: redisAccess, refresh: redisRefresh } = JSON.parse(userTokens);
-            console.log(redisAccess, redisRefresh);
 
             return res.status(HttpStatusEnum.OK).json({
                 status: HttpStatusEnum.OK,
                 message: HttpMessageEnum.OK,
-                data: {
-                    access: redisAccess,
-                    refresh: redisRefresh,
-                },
+                data: [
+                    access,
+                    refresh,
+                ],
+            });
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    public async registration(req: IRequest, res: IResponse<Users>, next: NextFunction): Promise<IResponse<Users> | undefined> {
+        try {
+            const {
+                nickName, role, email, password,
+            } = req.user as IUser;
+
+            const userDB = await authService.registration({
+                nickName, role, email, password,
+            });
+
+            if (!userDB) {
+                next(new ErrorHandler(
+                    errorMessageConstant.userNotRegistration,
+                    HttpStatusEnum.NOT_IMPLEMENTED,
+                    HttpMessageEnum.NOT_IMPLEMENTED,
+                ));
+                return;
+            }
+
+            return res.status(HttpStatusEnum.CREATED).json({
+                status: HttpStatusEnum.CREATED,
+                data: userDB,
+                message: HttpMessageEnum.CREATED,
             });
         } catch (e) {
             next(e);

@@ -1,25 +1,41 @@
 import Joi from 'joi';
 
-import { joiCommonValidatorsUtil } from './joi-common-validators.util';
+import { joiCommonsFieldsUtil } from './joi-commons-fields.util';
+import { ErrorsMessagesValidationsConstant } from '../constants';
 
 class JoiValidatorUtil {
     public static userSchema: Joi.ObjectSchema = Joi.object({
         nickName: Joi.string().min(4).max(20).trim()
             .required()
-            .messages({ 'any.only': 'Must be a valid nickName' }),
-        password: joiCommonValidatorsUtil.password
+            .messages(ErrorsMessagesValidationsConstant),
+        password: joiCommonsFieldsUtil.password
             .required()
-            .messages({ 'any.only': 'Must be a valid password' }),
-        email: joiCommonValidatorsUtil.email
+            .messages(ErrorsMessagesValidationsConstant),
+        email: joiCommonsFieldsUtil.email
             .required()
-            .messages({ 'any.only': 'Must be a valid email address' }),
+            .messages(ErrorsMessagesValidationsConstant),
         role: Joi.string().min(4).max(5).trim()
-            .messages({ 'any.only': 'Must be a valid role' })
+            .messages(ErrorsMessagesValidationsConstant)
             .optional(),
         avatar: Joi.binary()
             .optional()
-            .messages({ 'any.only': 'must be a valid avatar' }),
+            .messages(ErrorsMessagesValidationsConstant),
+    });
+
+    public static loginSchema: Joi.ObjectSchema = Joi.object({
+        email: joiCommonsFieldsUtil.email
+            .required()
+            .messages(ErrorsMessagesValidationsConstant),
+        password: joiCommonsFieldsUtil.password
+            .required()
+            .messages(ErrorsMessagesValidationsConstant),
+    });
+
+    public static emailSchema: Joi.ObjectSchema = Joi.object({
+        email: joiCommonsFieldsUtil.email
+            .required()
+            .messages(ErrorsMessagesValidationsConstant),
     });
 }
 
-export const { userSchema } = JoiValidatorUtil;
+export const { userSchema, loginSchema, emailSchema } = JoiValidatorUtil;

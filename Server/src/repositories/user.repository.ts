@@ -13,7 +13,7 @@ class UserRepository {
         return this.userRepository.save(user);
     }
 
-    public async getOneByEmailOrNickName({ email, nickName }: any): Promise<Users | null> {
+    public async getOneByEmailOrNickName({ email, nickName }: IUser): Promise<Users | null> {
         return this.userRepository.findOne({
             where: [
                 { email },
@@ -30,6 +30,10 @@ class UserRepository {
             .leftJoinAndSelect('users.favorites', 'favorites')
             .leftJoinAndSelect('users.ratings', 'ratings')
             .getMany();
+    }
+
+    public async getOneByEmail(email: string): Promise<Users | null> {
+        return this.userRepository.findOneBy({ email });
     }
 }
 
