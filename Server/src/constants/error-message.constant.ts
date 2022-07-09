@@ -5,5 +5,5 @@ export const errorMessageConstant = {
     unknown: 'Невідома помилка',
     clientKey: 'Неправильні дані, число ключа повино бути більше рівне нулю (>= 0), а тип ClientKeyEnum',
     userNotRegistration: 'ПОМИЛКА СЕРВЕРА: НЕ ВДАЛОСЯ ЗАПИСАТИ КОРИСТУВАЧА',
-    authorization: 'Немає авторизованної дати',
+    authorization: 'Немає авторизованних данних',
 };

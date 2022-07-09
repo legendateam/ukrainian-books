@@ -2,35 +2,64 @@ import { Router } from 'express';
 
 import { authController } from '../controllers';
 import { authMiddleware } from '../middlewares';
-import { apiRouter } from './api.router';
 
 export const authRouter = Router();
 
 authRouter.post(
     '/registration',
     authMiddleware.validateBodyRegistration,
-    authMiddleware.checkIsAlreadyExists,
+    authMiddleware.checkUserOnUnique,
     authController.registration,
 );
+
 authRouter.post(
     '/login',
     authMiddleware.validateBodyLogin,
-    authMiddleware.checkUserIsAuth,
+    authMiddleware.checkUserAuthByEmail,
     authMiddleware.checkPassword,
     authMiddleware.checkClientExistsKeys,
     authController.login,
 );
-apiRouter.post(
+
+authRouter.post(
     '/logout',
     authMiddleware.isAuthorization,
+    authMiddleware.isClientKey,
+    authMiddleware.validateAuthorizationToken,
     authMiddleware.checkAuthorizationOnBearer,
+    authMiddleware.verifyAccessToken,
+    authMiddleware.wasItIssuedToken,
+    authMiddleware.checkUserAuthByPayload,
+    authController.logout,
 );
-apiRouter.post(
+
+authRouter.post(
     '/refresh',
     authMiddleware.isAuthorization,
+    authMiddleware.isClientKey,
+    authMiddleware.validateAuthorizationToken,
     authMiddleware.checkAuthorizationOnBearer,
+    authMiddleware.verifyRefreshToken,
+    authMiddleware.wasItIssuedToken,
+    authMiddleware.checkUserAuthByPayload,
+    authController.refresh,
 );
-apiRouter.post(
+
+authRouter.post(
     '/forgotPassword',
     authMiddleware.validateEmail,
+    authMiddleware.checkUserAuthByEmail,
+    authMiddleware.alreadyExistsForgotToken,
+    authController.forgotPassword,
+);
+
+authRouter.patch(
+    '/forgotPassword',
+    authMiddleware.isAuthorization,
+    authMiddleware.isPassword,
+    authMiddleware.validateAuthorizationToken,
+    authMiddleware.checkAuthorizationOnBearer,
+    authMiddleware.verifyForgotToken,
+    authMiddleware.checkUserAuthByPayload,
+    authController.changePassword,
 );

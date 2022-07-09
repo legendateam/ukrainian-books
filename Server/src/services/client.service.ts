@@ -24,13 +24,17 @@ class ClientService {
         return this.client.del(key);
     }
 
-    public async getKeysByNickName(nickName: string): Promise<string[]> {
-        return this.client.keys(`*${nickName}*`);
+    public async getAnyKeysByNickName(nickName: string, type: ClientKeyEnum): Promise<string[]> {
+        return this.client.keys(`*${type}:${nickName}*`);
     }
 
-    public generateKey(nickName: string, type: ClientKeyEnum, numberKey = 0) {
-        if (numberKey !== 0 && numberKey > 0) {
-            this.incrementNumberKey(numberKey);
+    public async getKey(key: string): Promise<string[]> {
+        return this.client.keys(key);
+    }
+
+    public generateKey(nickName: string, type: ClientKeyEnum, numberKey = 1) {
+        if (numberKey > 1) {
+            this._incrementNumberKey(numberKey);
         }
 
         if (type === ClientKeyEnum.ACTIONS_LIKES) {
@@ -46,7 +50,7 @@ class ClientService {
         }
     }
 
-    private incrementNumberKey(numberKey: number): number {
+    private _incrementNumberKey(numberKey: number): number {
         return numberKey + 1;
     }
 }

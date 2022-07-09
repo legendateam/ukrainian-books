@@ -11,4 +11,8 @@ export const joiCommonsFieldsUtil = {
         .min(7)
         .max(40)
         .trim(),
+    token: Joi.string()
+        .token()
+        .min(10),
+    clientKey: Joi.string(),
 };

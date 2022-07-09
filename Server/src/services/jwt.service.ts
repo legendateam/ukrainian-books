@@ -29,6 +29,10 @@ class JwtService {
             secretWord = mainConfig.SECRET_REFRESH_KEY;
         }
 
+        if (type === TokensEnum.FORGOT) {
+            secretWord = mainConfig.SECRET_FORGOT_PASSWORD_KEY;
+        }
+
         return jwt.verify(token, secretWord);
     }
 }

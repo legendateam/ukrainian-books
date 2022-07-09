@@ -1,6 +1,8 @@
+import { UpdateResult } from 'typeorm';
+
 import { AppDataSource } from '../configs';
 import { Users } from '../entities';
-import { IUser } from '../interfaces';
+import { IUniqueUserField, IUser } from '../interfaces';
 
 class UserRepository {
     userRepository;
@@ -13,7 +15,7 @@ class UserRepository {
         return this.userRepository.save(user);
     }
 
-    public async getOneByEmailOrNickName({ email, nickName }: IUser): Promise<Users | null> {
+    public async getOneByEmailOrNickName({ email, nickName }: IUniqueUserField): Promise<Users | null> {
         return this.userRepository.findOne({
             where: [
                 { email },
@@ -34,6 +36,14 @@ class UserRepository {
 
     public async getOneByEmail(email: string): Promise<Users | null> {
         return this.userRepository.findOneBy({ email });
+    }
+
+    public async getOneById(id: number): Promise<Users | null> {
+        return this.userRepository.findOneBy({ id });
+    }
+
+    public async changePassword(id: number, password: string): Promise<UpdateResult> {
+        return this.userRepository.update({ id }, { password });
     }
 }
 

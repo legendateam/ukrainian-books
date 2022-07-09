@@ -36,6 +36,24 @@ class JoiValidatorUtil {
             .required()
             .messages(ErrorsMessagesValidationsConstant),
     });
+
+    public static clientKeySchema: Joi.ObjectSchema = Joi.object({
+        clientKey: joiCommonsFieldsUtil.clientKey
+            .required()
+            .messages(ErrorsMessagesValidationsConstant),
+    });
+
+    public static tokenSchema: Joi.ObjectSchema = Joi.object({
+        token: joiCommonsFieldsUtil.token
+            .required()
+            .messages(ErrorsMessagesValidationsConstant),
+    });
+
+    public static passwordSchema: Joi.ObjectSchema = Joi.object({
+        password: joiCommonsFieldsUtil.password
+            .required()
+            .messages(ErrorsMessagesValidationsConstant),
+    });
 }
 
-export const { userSchema, loginSchema, emailSchema } = JoiValidatorUtil;
+export const { userSchema, loginSchema, emailSchema, clientKeySchema, tokenSchema, passwordSchema } = JoiValidatorUtil;
