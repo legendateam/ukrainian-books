@@ -1,4 +1,5 @@
 export * from './requests/request.interface';
+export * from './requests/email.request.interface';
 export * from './response/response.interface';
 export * from './already-read.interface';
 export * from './author.interface';

@@ -4,19 +4,23 @@ import {
     IForgotToken, IPayload, IRequest, IResponse, IUser,
 } from '../interfaces';
 import { authService } from '../services';
-import { HttpMessageEnum, HttpStatusEnum, MessagesEnum } from '../enums';
+import {
+    EmailEnum, HttpMessageEnum, HttpStatusEnum, MessagesEnum,
+} from '../enums';
 import { Users } from '../entities';
 import { ErrorHandler } from '../error';
 import { errorMessageConstant, messagesConstant } from '../constants';
 import { ITokensPair } from '../interfaces/tokens-pair.interface';
+import { emailService } from '../services/email.service';
 
 class AuthController {
     public async login(req: IRequest, res: IResponse<ITokensPair>, next: NextFunction): Promise<IResponse<ITokensPair> | undefined> {
         try {
-            const { nickName, role, id } = req.user as Users;
-            const clientKey = req.clientKey as string;
+            const {
+                nickName, role, id, email,
+            } = req.user as Users;
 
-            const tokensGeneratedAndSaved = await authService.login({ id, role, nickName }, clientKey);
+            const tokensGeneratedAndSaved = await authService.login({ id, role, nickName });
 
             if (!tokensGeneratedAndSaved) {
                 next(new ErrorHandler(
@@ -27,7 +31,9 @@ class AuthController {
                 return;
             }
 
-            const { access, refresh } = tokensGeneratedAndSaved;
+            const { access, refresh, clientKey } = tokensGeneratedAndSaved as ITokensPair;
+
+            await emailService.sendEmail(email, EmailEnum.WELCOME, { nickName });
 
             return res.status(HttpStatusEnum.OK).json({
                 status: HttpStatusEnum.OK,
@@ -98,9 +104,9 @@ class AuthController {
 
     public async refresh(req: IRequest, res: IResponse<ITokensPair>, next: NextFunction): Promise<IResponse<ITokensPair> | undefined> {
         try {
-            const clientKey = req.clientKey as string;
+            const requestClientKey = req.clientKey as string;
             const payload = req.payload as IPayload;
-            const newTokens = await authService.refresh(payload, clientKey);
+            const newTokens = await authService.refresh(payload, requestClientKey);
 
             if (!newTokens) {
                 next(new ErrorHandler(
@@ -111,7 +117,7 @@ class AuthController {
                 return;
             }
 
-            const { refresh, access } = newTokens;
+            const { refresh, access, clientKey } = newTokens;
 
             return res.status(HttpStatusEnum.OK).json({
                 status: HttpStatusEnum.OK,
@@ -129,9 +135,9 @@ class AuthController {
 
     public async forgotPassword(req: IRequest, res: IResponse<string>, next: NextFunction): Promise<IResponse<string> | undefined> {
         try {
-            const user = req.user as Users;
+            const { nickName, id, role } = req.user as Users;
 
-            const forgotGeneratedAndSaved = await authService.forgotPassword(user);
+            const forgotGeneratedAndSaved = await authService.forgotPassword({ id, nickName, role });
 
             if (!forgotGeneratedAndSaved) {
                 next(new ErrorHandler(

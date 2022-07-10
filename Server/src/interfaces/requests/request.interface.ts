@@ -13,6 +13,7 @@ import { IWillRead } from '../will-read.interface';
 import { Users } from '../../entities';
 import { IPayload } from '../payload.interface';
 import { IClientKey } from '../client-key.interface';
+import { IEmailRequest } from './email.request.interface';
 
 export interface IRequest extends Request{
     alreadyReadBook?: IAlreadyRead,
@@ -27,7 +28,7 @@ export interface IRequest extends Request{
     login?: ILogin,
     clientKey?: string | IClientKey,
     authorization?: string,
-    email?: string,
+    email?: IEmailRequest,
     payload?: IPayload;
     password?: string;
 }

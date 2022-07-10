@@ -8,6 +8,7 @@ import { jwtService } from './jwt.service';
 import { ClientKeyEnum, TokensEnum } from '../enums';
 import { ITokensPair } from '../interfaces/tokens-pair.interface';
 import { bcryptService } from './bcrypt.service';
+import { mainConfig } from '../configs';
 
 class AuthService {
     public async registration(user: IUser): Promise<Users> {
@@ -15,15 +16,15 @@ class AuthService {
         return userRepository.createOne({ ...user, password: hashPassword });
     }
 
-    public async login(payload: IPayload, clientKey: string): Promise<ITokensPair | undefined> {
-        const generatedTokens = await this._generateNewTokenPair(payload, clientKey);
+    public async login(payload: IPayload): Promise<ITokensPair | undefined> {
+        const generatedTokens = await this._generateNewTokenPair(payload);
 
         if (!generatedTokens) {
             return;
         }
 
         if (generatedTokens) {
-            const { clientKey, refresh, access } = generatedTokens;
+            const { refresh, access, clientKey } = generatedTokens as ITokensPair;
 
             return {
                 access,
@@ -42,7 +43,7 @@ class AuthService {
         if (!numberDeleted) {
             return;
         }
-        return this._generateNewTokenPair(payload, clientKey);
+        return this._generateNewTokenPair(payload);
     }
 
     public async forgotPassword(payload: IPayload): Promise<IForgotToken| undefined> {
@@ -54,11 +55,26 @@ class AuthService {
         return userRepository.changePassword(Number(id), hashPassword);
     }
 
-    private async _generateNewTokenPair({ nickName, role, id }: IPayload, clientKey: string): Promise<ITokensPair | undefined> {
+    private async _generateNewTokenPair({ nickName, role, id }: IPayload, clientKey?: string): Promise<ITokensPair | undefined> {
         const access = jwtService.sign({ id, nickName, role });
         const refresh = jwtService.sign({ id, nickName, role }, TokensEnum.REFRESH);
 
-        const savedToken = await clientService.set(clientKey, JSON.stringify({ access, refresh }));
+        if (!clientKey) {
+            const clientKey = clientService.generateKey(nickName!, ClientKeyEnum.AUTH_TOKENS);
+
+            const savedToken = await clientService
+                .setExpire(clientKey, Number(mainConfig.EXPIRES_CLIENT_TOKENS_PAIR), JSON.stringify({ access, refresh }));
+
+            if (!savedToken) {
+                return;
+            }
+            return {
+                access, refresh, clientKey,
+            };
+        }
+
+        const savedToken = await clientService
+            .setExpire(clientKey, Number(mainConfig.EXPIRES_CLIENT_TOKENS_PAIR), JSON.stringify({ access, refresh }));
 
         if (!savedToken) {
             return;
@@ -71,12 +87,11 @@ class AuthService {
     private async _generateForgotPToken(payload: IPayload): Promise<IForgotToken | undefined> {
         const { nickName } = payload as Users;
         const forgot = jwtService.sign(payload, TokensEnum.FORGOT);
-
         const clientKey = clientService.generateKey(nickName, ClientKeyEnum.FORGOT);
 
         if (clientKey) {
-            const savedToken = await clientService.set(clientKey, JSON.stringify({ forgot }));
-
+            const savedToken = await clientService
+                .setExpire(clientKey, Number(mainConfig.EXPIRES_CLIENT_FORGOT), JSON.stringify({ forgot }));
             if (!savedToken) {
                 return;
             }

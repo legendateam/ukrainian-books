@@ -1,7 +1,7 @@
 import { NextFunction, Response } from 'express';
 
 import {
-    IClientKey, ILogin, IPayload, IRequest, IResponse, IUser,
+    IClientKey, IEmailRequest, ILogin, IPayload, IRequest, IResponse, IUser,
 } from '../interfaces';
 import {
     clientKeySchema, emailSchema, loginSchema, passwordSchema, tokenSchema, userSchema,
@@ -13,7 +13,7 @@ import {
 } from '../services';
 import { errorMessageConstant, requestConstant } from '../constants';
 import { Users } from '../entities';
-import { ClientKeyEnum } from '../enums/client-key.enum';
+import { ClientKeyEnum } from '../enums';
 import { ITokensPair } from '../interfaces/tokens-pair.interface';
 
 class AuthMiddleware {
@@ -38,6 +38,7 @@ class AuthMiddleware {
     public validateBodyRegistration(req: IRequest, _: Response, next: NextFunction): void {
         try {
             const { body } = req;
+
             const { value, error } = userSchema.validate(body);
 
             if (error) {
@@ -70,7 +71,7 @@ class AuthMiddleware {
 
     public async checkUserAuthByEmail(req: IRequest, _: Response, next: NextFunction): Promise<void> {
         try {
-            const email = req.email as string;
+            const email = req.email as IEmailRequest;
             const user = await userService.getOneByEmail(email);
 
             if (!user) {
@@ -114,38 +115,7 @@ class AuthMiddleware {
                 next(new ErrorHandler(errorMessageConstant.unauthorized, HttpStatusEnum.UNAUTHORIZED, HttpMessageEnum.UNAUTHORIZED));
                 return;
             }
-        } catch (e) {
-            next(e);
-        }
-    }
 
-    public async checkClientExistsKeys(req: IRequest, _: Response, next: NextFunction): Promise<void> {
-        try {
-            const { nickName } = req.user as Users;
-            const keys = await clientService.getAnyKeysByNickName(nickName, ClientKeyEnum.AUTH_TOKENS);
-
-            if (keys) {
-                const lastKey = keys.slice(-1);
-                const numberKey = lastKey[0]?.split(':')[2] as string;
-
-                if (Number(numberKey) <= 0) {
-                    next(new ErrorHandler(
-                        errorMessageConstant.clientKey,
-                        HttpStatusEnum.INTERNAL_SERVER_ERROR,
-                        HttpMessageEnum.INTERNAL_SERVER_ERROR,
-                    ));
-                    return;
-                }
-
-                const key = clientService.generateKey(nickName, ClientKeyEnum.AUTH_TOKENS, Number(numberKey));
-
-                req.clientKey = key;
-                next();
-                return;
-            }
-
-            const key = clientService.generateKey(nickName, ClientKeyEnum.AUTH_TOKENS);
-            req.clientKey = key;
             next();
         } catch (e) {
             next(e);
@@ -194,6 +164,7 @@ class AuthMiddleware {
                 return;
             }
 
+            req.authorization = token;
             next();
         } catch (e) {
             next(e);
@@ -265,7 +236,7 @@ class AuthMiddleware {
             const token = req.authorization as string;
             const { nickName, role, id } = jwtService.verify(token, TokensEnum.REFRESH) as IPayload;
 
-            if (!nickName) {
+            if (!nickName || !role || !id) {
                 next(
                     new ErrorHandler(
                         errorMessageConstant.unauthorized,
@@ -380,7 +351,7 @@ class AuthMiddleware {
     public isPassword(req: IRequest, _: IResponse<ITokensPair>, next: NextFunction): void {
         try {
             const { body } = req.body;
-            const { value, error } = passwordSchema.validate({ body });
+            const { value, error } = passwordSchema.validate(body);
 
             if (error) {
                 next(new ErrorHandler(error.message, HttpStatusEnum.BAD_REQUEST, HttpMessageEnum.BAD_REQUEST));

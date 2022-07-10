@@ -1,6 +1,7 @@
 import { createClient } from 'redis';
+import { v4 as uuidv4 } from 'uuid';
 
-import { ClientKeyEnum } from '../enums/client-key.enum';
+import { ClientKeyEnum } from '../enums';
 
 class ClientService {
     client;
@@ -20,6 +21,10 @@ class ClientService {
         return this.client.set(key, data);
     }
 
+    public async setExpire(key: string, expireTime: number, value: string): Promise<string | null> {
+        return this.client.setEx(key, expireTime, value);
+    }
+
     public async delete(key: string): Promise<number> {
         return this.client.del(key);
     }
@@ -32,26 +37,22 @@ class ClientService {
         return this.client.keys(key);
     }
 
-    public generateKey(nickName: string, type: ClientKeyEnum, numberKey = 1) {
-        if (numberKey > 1) {
-            this._incrementNumberKey(numberKey);
-        }
+    public generateKey(nickName: string, type: ClientKeyEnum): string {
+        let clientKey = '';
 
         if (type === ClientKeyEnum.ACTIONS_LIKES) {
-            return `${ClientKeyEnum.ACTIONS_LIKES}:${nickName}:${numberKey}`;
+            clientKey = `${ClientKeyEnum.ACTIONS_LIKES}:${nickName}:${uuidv4()}`;
         }
 
         if (type === ClientKeyEnum.FORGOT) {
-            return `${ClientKeyEnum.FORGOT}:${nickName}:${numberKey}`;
+            clientKey = `${ClientKeyEnum.FORGOT}:${nickName}:${uuidv4()}`;
         }
 
         if (type === ClientKeyEnum.AUTH_TOKENS) {
-            return `${ClientKeyEnum.AUTH_TOKENS}:${nickName}:${numberKey}`;
+            clientKey = `${ClientKeyEnum.AUTH_TOKENS}:${nickName}:${uuidv4()}`;
         }
-    }
 
-    private _incrementNumberKey(numberKey: number): number {
-        return numberKey + 1;
+        return clientKey;
     }
 }
 export const clientService = new ClientService();

@@ -1,5 +1,5 @@
 import { userRepository } from '../repositories';
-import { IUniqueUserField } from '../interfaces';
+import { IEmailRequest, IUniqueUserField } from '../interfaces';
 import { Users } from '../entities';
 
 export class UserService {
@@ -7,7 +7,7 @@ export class UserService {
         return userRepository.getOneByEmailOrNickName(data);
     }
 
-    public async getOneByEmail(email: string): Promise<Users | null> {
+    public async getOneByEmail({ email }: IEmailRequest): Promise<Users | null> {
         return userRepository.getOneByEmail(email);
     }
 
