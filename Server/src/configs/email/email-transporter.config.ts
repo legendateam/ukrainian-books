@@ -6,6 +6,6 @@ export const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
         user: mainConfig.ROOT_EMAIL,
-        pass: mainConfig.NO_REPLY_EMAIL_PASSWORD,
+        pass: mainConfig.ROOT_EMAIL_PASSWORD,
     },
 });

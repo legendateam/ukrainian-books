@@ -28,8 +28,6 @@ export const mainConfig = {
 
     ROOT_EMAIL: process.env.ROOT_EMAIL,
     ROOT_EMAIL_PASSWORD: process.env.ROOT_EMAIL_PASSWORD,
-    NO_REPLY_EMAIL: process.env.NO_REPLY_EMAIL,
-    NO_REPLY_EMAIL_PASSWORD: process.env.NO_REPLY_EMAIL_PASSWORD,
 
     S3_NAME: process.env.S3_NAME,
     S3_REGION: process.env.S3_REGION,

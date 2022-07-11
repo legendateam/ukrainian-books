@@ -7,14 +7,15 @@ import {
     clientKeySchema, emailSchema, loginSchema, passwordSchema, tokenSchema, userSchema,
 } from '../utils';
 import { ErrorHandler } from '../error';
-import { HttpMessageEnum, HttpStatusEnum, TokensEnum } from '../enums';
 import {
     bcryptService, clientService, jwtService, userService,
 } from '../services';
 import { errorMessageConstant, requestConstant } from '../constants';
 import { Users } from '../entities';
-import { ClientKeyEnum } from '../enums';
 import { ITokensPair } from '../interfaces/tokens-pair.interface';
+import {
+    ClientKeyEnum, HttpMessageEnum, HttpStatusEnum, TokensEnum,
+} from '../enums';
 
 class AuthMiddleware {
     public validateBodyLogin(req: IRequest, _: Response, next: NextFunction): void {
