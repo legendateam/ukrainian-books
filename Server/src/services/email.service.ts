@@ -1,10 +1,10 @@
 import { EmailEnum } from '../enums';
 import { emailTemplate, transporter } from '../configs';
-import { emailConstant } from '../constants';
+import { emailTemplateConstant } from '../constants';
 
 export class EmailService {
     public async sendEmail(email: string, type: EmailEnum, context: object) {
-        const { subject, template } = emailConstant[type];
+        const { subject, template } = emailTemplateConstant[type];
 
         const html = await emailTemplate.render(template, context);
 

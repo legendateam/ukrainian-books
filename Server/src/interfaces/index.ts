@@ -12,6 +12,7 @@ export * from './genre.interface';
 export * from './login.interface';
 export * from './rating.interface';
 export * from './payload.interface';
+export * from './tokens-pair.interface';
 export * from './unique-user-field.interface';
 export * from './user.interface';
 export * from './will-read.interface';

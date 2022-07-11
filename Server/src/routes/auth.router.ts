@@ -1,12 +1,30 @@
 import { Router } from 'express';
+import multer from 'multer';
 
 import { authController } from '../controllers';
 import { authMiddleware } from '../middlewares';
+import { fileSizeConstant } from '../constants/file-size.constant';
+import { errorMessageConstant, filesConstant } from '../constants';
+import { FileEnum, HttpMessageEnum, HttpStatusEnum } from '../enums';
+import { ErrorHandler } from '../error';
+import { IRequest } from '../interfaces';
 
 export const authRouter = Router();
+const upload = multer({
+    limits: { fileSize: fileSizeConstant.SIZE_AVATAR },
+    fileFilter(_: IRequest, file: Express.Multer.File, callback: multer.FileFilterCallback) {
+        if (!filesConstant[FileEnum.PHOTOS].includes(file.mimetype)) {
+            return callback(
+                new ErrorHandler(errorMessageConstant.fileMimetype, HttpStatusEnum.BAD_REQUEST, HttpMessageEnum.BAD_REQUEST),
+            );
+        }
+        callback(null, true);
+    },
+});
 
 authRouter.post(
     '/registration',
+    upload.single('avatar'),
     authMiddleware.validateBodyRegistration,
     authMiddleware.checkUserOnUnique,
     authController.registration,

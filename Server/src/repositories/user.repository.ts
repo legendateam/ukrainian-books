@@ -45,6 +45,10 @@ class UserRepository {
     public async changePassword(id: number, password: string): Promise<UpdateResult> {
         return this.userRepository.update({ id }, { password });
     }
+
+    public async updateAvatar(id: number, pathFile: string): Promise<UpdateResult> {
+        return this.userRepository.update({ id }, { avatar: pathFile });
+    }
 }
 
 export const userRepository = new UserRepository();

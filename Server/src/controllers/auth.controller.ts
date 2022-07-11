@@ -1,16 +1,15 @@
 import { NextFunction } from 'express';
 
 import {
-    IForgotToken, IPayload, IRequest, IResponse, IUser,
+    IForgotToken, IPayload, IRequest, IResponse, ITokensPair, IUser,
 } from '../interfaces';
-import { authService } from '../services';
+import { authService, s3Service, userService } from '../services';
 import {
-    EmailEnum, HttpMessageEnum, HttpStatusEnum, MessagesEnum,
+    EmailEnum, FileEnum, HttpMessageEnum, HttpStatusEnum, ItemTypeFileEnum, MessagesEnum,
 } from '../enums';
 import { Users } from '../entities';
 import { ErrorHandler } from '../error';
-import { errorMessageConstant, messagesConstant } from '../constants';
-import { ITokensPair } from '../interfaces/tokens-pair.interface';
+import { errorMessageConstant, emailMessagesConstant } from '../constants';
 import { emailService } from '../services/email.service';
 
 class AuthController {
@@ -66,6 +65,20 @@ class AuthController {
                     HttpMessageEnum.NOT_IMPLEMENTED,
                 ));
                 return;
+            }
+
+            if (req.file) {
+                const userId = userDB.id;
+                const avatarSaved = await s3Service.uploadFile(req.file, userId, FileEnum.PHOTOS, ItemTypeFileEnum.USERS);
+                const pathFile = avatarSaved.Location;
+
+                await userService.updateAvatar(userId, pathFile);
+
+                return res.status(HttpStatusEnum.CREATED).json({
+                    status: HttpStatusEnum.CREATED,
+                    data: { ...userDB, avatar: pathFile },
+                    message: HttpMessageEnum.CREATED,
+                });
             }
 
             return res.status(HttpStatusEnum.CREATED).json({
@@ -155,7 +168,7 @@ class AuthController {
             return res.status(HttpStatusEnum.OK).json({
                 status: HttpStatusEnum.OK,
                 message: HttpMessageEnum.OK,
-                data: messagesConstant[MessagesEnum.AFTER_SENT_MESSAGE_ON_EMAIL],
+                data: emailMessagesConstant[MessagesEnum.AFTER_SENT_MESSAGE_ON_EMAIL],
             });
         } catch (e) {
             next(e);
@@ -168,7 +181,7 @@ class AuthController {
             const payload = req.payload as IPayload;
             const id = payload as number;
 
-            const changePassword = authService.changePassword(password, id);
+            const changePassword = userService.changePassword(id, password);
 
             if (!changePassword) {
                 next(new ErrorHandler(
@@ -183,7 +196,7 @@ class AuthController {
                 .json({
                     status: HttpStatusEnum.OK,
                     message: HttpMessageEnum.OK,
-                    data: messagesConstant[MessagesEnum.CHANGE_PASSWORD],
+                    data: emailMessagesConstant[MessagesEnum.CHANGE_PASSWORD],
                 });
         } catch (e) {
             next(e);

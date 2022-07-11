@@ -1,12 +1,11 @@
-import { UpdateResult } from 'typeorm';
-
-import { IForgotToken, IPayload, IUser } from '../interfaces';
+import {
+    IForgotToken, IPayload, IUser, ITokensPair,
+} from '../interfaces';
 import { Users } from '../entities';
 import { userRepository } from '../repositories';
 import { clientService } from './client.service';
 import { jwtService } from './jwt.service';
 import { ClientKeyEnum, TokensEnum } from '../enums';
-import { ITokensPair } from '../interfaces/tokens-pair.interface';
 import { bcryptService } from './bcrypt.service';
 import { mainConfig } from '../configs';
 
@@ -47,31 +46,14 @@ class AuthService {
     }
 
     public async forgotPassword(payload: IPayload): Promise<IForgotToken| undefined> {
-        return this._generateForgotPToken(payload);
+        return this._generateForgotToken(payload);
     }
 
-    public async changePassword(password: string, id: number): Promise<UpdateResult> {
-        const hashPassword = await bcryptService.hash(password);
-        return userRepository.changePassword(Number(id), hashPassword);
-    }
-
-    private async _generateNewTokenPair({ nickName, role, id }: IPayload, clientKey?: string): Promise<ITokensPair | undefined> {
+    private async _generateNewTokenPair({ nickName, role, id }: IPayload): Promise<ITokensPair | undefined> {
         const access = jwtService.sign({ id, nickName, role });
         const refresh = jwtService.sign({ id, nickName, role }, TokensEnum.REFRESH);
 
-        if (!clientKey) {
-            const clientKey = clientService.generateKey(nickName!, ClientKeyEnum.AUTH_TOKENS);
-
-            const savedToken = await clientService
-                .setExpire(clientKey, Number(mainConfig.EXPIRES_CLIENT_TOKENS_PAIR), JSON.stringify({ access, refresh }));
-
-            if (!savedToken) {
-                return;
-            }
-            return {
-                access, refresh, clientKey,
-            };
-        }
+        const clientKey = clientService.generateKey(nickName!, ClientKeyEnum.AUTH_TOKENS);
 
         const savedToken = await clientService
             .setExpire(clientKey, Number(mainConfig.EXPIRES_CLIENT_TOKENS_PAIR), JSON.stringify({ access, refresh }));
@@ -84,7 +66,7 @@ class AuthService {
         };
     }
 
-    private async _generateForgotPToken(payload: IPayload): Promise<IForgotToken | undefined> {
+    private async _generateForgotToken(payload: IPayload): Promise<IForgotToken | undefined> {
         const { nickName } = payload as Users;
         const forgot = jwtService.sign(payload, TokensEnum.FORGOT);
         const clientKey = clientService.generateKey(nickName, ClientKeyEnum.FORGOT);
