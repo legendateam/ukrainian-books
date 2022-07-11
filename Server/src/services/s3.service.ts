@@ -14,22 +14,23 @@ class S3Service {
         this.Bucket = new S3({
             region: mainConfig.S3_REGION,
             accessKeyId: mainConfig.S3_ACCESS_KEY,
-            secretAccessKey: mainConfig.SECRET_ACCESS_KEY,
+            secretAccessKey: mainConfig.S3_SECRET_KEY,
         });
         this.uuidv4 = v4;
     }
 
     public async uploadFile(file: Express.Multer.File, itemId: number, fileType: FileEnum, itemType: ItemTypeFileEnum)
     : Promise<ManagedUpload.SendData> {
-        const fileName = file.originalname;
+        const { originalname, buffer, mimetype } = file;
         const itemIdToString = itemId.toString();
-        const pathToFile = this._pathBuilder(fileName, itemIdToString, fileType, itemType);
+
+        const pathToFile = this._pathBuilder(originalname, itemIdToString, fileType, itemType);
 
         return this.Bucket.upload({
             Bucket: mainConfig.S3_NAME as string,
             Key: pathToFile,
-            Body: file.buffer,
-            ContentType: file.mimetype,
+            Body: buffer,
+            ContentType: mimetype,
             ACL: 'public-read',
         })
             .promise();
@@ -39,7 +40,7 @@ class S3Service {
         const fileExpansion = path.extname(fileName);
         const newFileName = this.uuidv4() + fileExpansion;
 
-        return path.join(fileType, itemType, itemId, newFileName);
+        return `${fileType}/${itemType}/${itemId}/${newFileName}`;
     }
 }
 export const s3Service = new S3Service();

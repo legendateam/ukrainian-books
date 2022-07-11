@@ -70,6 +70,14 @@ class AuthController {
             if (req.file) {
                 const userId = userDB.id;
                 const avatarSaved = await s3Service.uploadFile(req.file, userId, FileEnum.PHOTOS, ItemTypeFileEnum.USERS);
+
+                if (!avatarSaved.Location) {
+                    return res.status(HttpStatusEnum.PARTIAL_CONTENT).json({
+                        status: HttpStatusEnum.PARTIAL_CONTENT,
+                        data: { ...userDB },
+                        message: HttpMessageEnum.PARTIAL_CONTENT,
+                    });
+                }
                 const pathFile = avatarSaved.Location;
 
                 await userService.updateAvatar(userId, pathFile);
