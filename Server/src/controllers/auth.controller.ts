@@ -11,6 +11,7 @@ import { Users } from '../entities';
 import { ErrorHandler } from '../error';
 import { errorMessageConstant, emailMessagesConstant } from '../constants';
 import { emailService } from '../services/email.service';
+import { mainConfig } from '../configs';
 
 class AuthController {
     public async login(req: IRequest, res: IResponse<ITokensPair>, next: NextFunction): Promise<IResponse<ITokensPair> | undefined> {
@@ -78,7 +79,7 @@ class AuthController {
                         message: HttpMessageEnum.PARTIAL_CONTENT,
                     });
                 }
-                const pathFile = avatarSaved.Location;
+                const pathFile = avatarSaved.Location.split(mainConfig.CLOUD_DOMAIN_NAME!)[1];
 
                 await userService.updateAvatar(userId, pathFile);
 

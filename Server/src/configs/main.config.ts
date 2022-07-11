@@ -33,4 +33,6 @@ export const mainConfig = {
     S3_REGION: process.env.S3_REGION,
     S3_ACCESS_KEY: process.env.S3_ACCESS_KEY,
     S3_SECRET_KEY: process.env.S3_SECRET_KEY,
+
+    CLOUD_DOMAIN_NAME: process.env.CLOUD_DOMAIN_NAME,
 };
