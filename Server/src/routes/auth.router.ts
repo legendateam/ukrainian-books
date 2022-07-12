@@ -74,9 +74,11 @@ authRouter.patch(
     '/forgotPassword',
     authMiddleware.isAuthorization,
     authMiddleware.isPassword,
+    authMiddleware.isClientKey,
     authMiddleware.checkAuthorizationOnBearer,
     authMiddleware.validateAuthorizationToken,
     authMiddleware.verifyForgotToken,
     authMiddleware.checkUserAuthByPayload,
+    authMiddleware.isAuthClientKey,
     authController.changePassword,
 );

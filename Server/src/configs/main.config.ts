@@ -13,7 +13,9 @@ export const mainConfig = {
     PG_PORT_DATABASE: process.env.PG_PORT_DATABASE || 5432,
     PG_PASSWORD_DATABASE: process.env.PG_PASSWORD_DATABASE || 'root',
 
-    DOMAIN_NAME: process.env.DOMAIN_NAME || 'https://my-library.ua/',
+    DOMAIN_NAME: process.env.DOMAIN_NAME || 'https://my-domain.ua',
+    PROJECT_NAME: process.env.PROJECT_NAME || 'my-project',
+
     PASSWORD_SALT_ROUNDS: process.env.PASSWORD_SALT_ROUNDS || 7,
 
     SECRET_ACCESS_KEY: process.env.SECRET_ACCESS_KEY || 'secret_access',

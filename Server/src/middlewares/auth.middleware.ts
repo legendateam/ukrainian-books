@@ -1,7 +1,7 @@
 import { NextFunction, Response } from 'express';
 
 import {
-    IClientKey, IEmailRequest, ILogin, IPayload, IRequest, IResponse, IUser,
+    IClientKey, ILogin, IPayload, IRequest, IResponse, IUser, ITokensPair,
 } from '../interfaces';
 import {
     clientKeySchema, emailSchema, loginSchema, passwordSchema, tokenSchema, userSchema,
@@ -12,7 +12,6 @@ import {
 } from '../services';
 import { errorMessageConstant, requestConstant } from '../constants';
 import { Users } from '../entities';
-import { ITokensPair } from '../interfaces/tokens-pair.interface';
 import {
     ClientKeyEnum, HttpMessageEnum, HttpStatusEnum, TokensEnum,
 } from '../enums';
@@ -72,7 +71,8 @@ class AuthMiddleware {
 
     public async checkUserAuthByEmail(req: IRequest, _: Response, next: NextFunction): Promise<void> {
         try {
-            const email = req.email as IEmailRequest;
+            const email = req.email as string;
+
             const user = await userService.getOneByEmail(email);
 
             if (!user) {
@@ -202,7 +202,7 @@ class AuthMiddleware {
                 return;
             }
 
-            req.email = value;
+            req.email = value.email;
             next();
         } catch (e) {
             next(e);
@@ -319,6 +319,7 @@ class AuthMiddleware {
             }
 
             const { clientKey } = body as IClientKey;
+
             req.clientKey = clientKey;
             next();
         } catch (e) {
@@ -341,6 +342,7 @@ class AuthMiddleware {
                         HttpStatusEnum.INTERNAL_SERVER_ERROR,
                         HttpMessageEnum.INTERNAL_SERVER_ERROR,
                     ));
+                    return;
                 }
             }
             next();
@@ -349,17 +351,39 @@ class AuthMiddleware {
         }
     }
 
+    public async isAuthClientKey(req: IRequest, _: IResponse<ITokensPair>, next: NextFunction): Promise<void> {
+        try {
+            const clientKey = req.clientKey as string;
+
+            const forgotToken = await clientService.getKey(clientKey);
+
+            if (!forgotToken.length) {
+                next(new ErrorHandler(
+                    errorMessageConstant.unauthorized,
+                    HttpStatusEnum.UNAUTHORIZED,
+                    HttpMessageEnum.UNAUTHORIZED,
+                ));
+                return;
+            }
+
+            next();
+        } catch (e) {
+            next(e);
+        }
+    }
+
     public isPassword(req: IRequest, _: IResponse<ITokensPair>, next: NextFunction): void {
         try {
-            const { body } = req.body;
-            const { value, error } = passwordSchema.validate(body);
+            const { body } = req;
+            const { value, error } = passwordSchema.validate({ password: body?.password });
 
             if (error) {
                 next(new ErrorHandler(error.message, HttpStatusEnum.BAD_REQUEST, HttpMessageEnum.BAD_REQUEST));
                 return;
             }
 
-            req.password = value;
+            req.body = { clientKey: body?.clientKey };
+            req.password = value.password;
             next();
         } catch (e) {
             next(e);

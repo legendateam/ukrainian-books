@@ -56,4 +56,6 @@ class JoiValidatorUtil {
     });
 }
 
-export const { userSchema, loginSchema, emailSchema, clientKeySchema, tokenSchema, passwordSchema } = JoiValidatorUtil;
+export const {
+    userSchema, loginSchema, emailSchema, clientKeySchema, tokenSchema, passwordSchema,
+} = JoiValidatorUtil;

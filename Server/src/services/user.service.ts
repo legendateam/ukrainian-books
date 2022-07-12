@@ -1,7 +1,7 @@
 import { UpdateResult } from 'typeorm';
 
 import { userRepository } from '../repositories';
-import { IEmailRequest, IUniqueUserField } from '../interfaces';
+import { IUniqueUserField } from '../interfaces';
 import { Users } from '../entities';
 import { bcryptService } from './bcrypt.service';
 
@@ -10,7 +10,7 @@ export class UserService {
         return userRepository.getOneByEmailOrNickName(data);
     }
 
-    public async getOneByEmail({ email }: IEmailRequest): Promise<Users | null> {
+    public async getOneByEmail(email: string): Promise<Users | null> {
         return userRepository.getOneByEmail(email);
     }
 
