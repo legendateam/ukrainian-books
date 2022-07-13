@@ -1,6 +1,6 @@
 import { FileEnum } from '../enums';
 
-export const filesConstant = {
+export const fileMimetypeConstant = {
     [FileEnum.PHOTOS]: [
         'image/jpeg', // JPEG
         'image/pjpeg', // JPEG
