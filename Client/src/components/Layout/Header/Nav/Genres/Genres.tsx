@@ -17,6 +17,8 @@ const Genres:FC = () => (
                     </Button>
                     <Popover
                         {...bindPopover(popupState)}
+                        anchorReference='anchorPosition'
+                        anchorPosition={{ top: 90, left: 570 }}
                         anchorOrigin={{
                             vertical: 'bottom',
                             horizontal: 'left',
