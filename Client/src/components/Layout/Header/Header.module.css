@@ -1,0 +1,21 @@
+header {
+    height: 80px;
+    background-color: #c97b82;
+}
+
+.header__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10%;
+}
+
+.header__container_nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 50vw;
+    gap: 10px;
+    padding: 10px 0
+}

@@ -1,0 +1,10 @@
+nav {
+    width: 60%;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
