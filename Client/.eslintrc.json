@@ -24,7 +24,9 @@
             "error",
             {
                 "js": "never",
-                "ts": "never"
+                "ts": "never",
+                "jsx": "never",
+                "tsx": "never"
             }
         ],
         "indent": ["error", 4],
@@ -38,7 +40,7 @@
     "settings": {
         "import/resolver": {
             "node": {
-                "extensions": [".js",".ts"]
+                "extensions": [".js",".ts", ".tsx"]
             }
         }
     }
