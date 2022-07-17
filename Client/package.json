@@ -26,6 +26,7 @@
     "axios": "^0.27.2",
     "dotenv": "^16.0.1",
     "joi": "^17.6.0",
+    "rimraf": "^3.0.2",
     "material-ui-popup-state": "^4.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

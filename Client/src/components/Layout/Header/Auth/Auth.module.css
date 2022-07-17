@@ -1,0 +1,10 @@
+.header__auth {
+    display: flex;
+    align-items: center;
+    width: 11vw;
+}
+
+.header__auth {
+    display: flex;
+    gap: 10px;
+}

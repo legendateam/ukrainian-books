@@ -26,7 +26,7 @@ const Genres:FC = () => (
                             horizontal: 'left',
                         }}
                     >
-                        <Typography sx={{ p: 3 }}>
+                        <Typography color='black' sx={{ p: 3 }}>
                             <ul className={css.header__nav_genres_typography}>
                                 <li><Genre /></li>
                                 <li><Genre /></li>

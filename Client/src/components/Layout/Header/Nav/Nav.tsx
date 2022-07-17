@@ -8,9 +8,9 @@ const Nav:FC = () => (
     <nav>
         <ul>
             <li><Genres /></li>
-            <li><NavLink to='/#'>Популярні</NavLink></li>
-            <li><NavLink to='/#'>Новинки</NavLink></li>
-            <li><NavLink to='/#'>Автори</NavLink></li>
+            <li><NavLink to='/#'>ПОПУЛЯРНІ</NavLink></li>
+            <li><NavLink to='/#'>НОВИНКИ</NavLink></li>
+            <li><NavLink to='/#'>АВТОРИ</NavLink></li>
         </ul>
     </nav>
 );

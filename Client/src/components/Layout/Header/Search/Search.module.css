@@ -1,8 +1,8 @@
 .header__form_search form input {
     width: 350px;
-    height: 30px;
+    height: 35px;
     box-sizing: border-box;
-    padding-left: 35px;
+    padding-left: 40px;
     border-radius: 20px;
     font-size: 16px;
     border: none;
@@ -23,6 +23,6 @@
 
 .header__form_icon {
     position: absolute;
-    top: 6px;
-    left: 8px;
+    top: 8px;
+    left: 12px;
 }

@@ -1,6 +1,6 @@
 header {
-    height: 80px;
-    background-color: #c97b82;
+    height: 100px;
+    background-color: #FF5A6F;
 }
 
 .header__container {
@@ -10,12 +10,16 @@ header {
     padding: 0 10%;
 }
 
+.header__container li, p, a, h1, h2, h3, h4, h5, h6 {
+    color: white;
+}
+
 .header__container_nav {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 50vw;
-    gap: 10px;
+    gap: 15px;
     padding: 10px 0
 }
