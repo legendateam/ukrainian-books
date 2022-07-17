@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 
 import css from './Header.module.css';
 import Logo from './Logo/Logo';
@@ -6,7 +6,7 @@ import Auth from './Auth/Auth';
 import Search from './Search/Search';
 import Nav from './Nav/Nav';
 
-const Header = () => (
+const Header: FC = () => (
     <header>
         <div className={css.header__container}>
             <Logo />

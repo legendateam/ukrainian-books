@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import './Nav.module.css';
 import Genres from './Genres/Genres';
 
-const Nav = () => (
+const Nav:FC = () => (
     <nav>
         <ul>
             <li><Genres /></li>

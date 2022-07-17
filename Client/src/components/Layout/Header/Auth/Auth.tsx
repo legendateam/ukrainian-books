@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { FC } from 'react';
 
-const Auth = () => (
+const Auth:FC = () => (
     <div>Auth</div>
 );
 

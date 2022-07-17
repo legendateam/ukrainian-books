@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { FC } from 'react';
 
 import './Logo.module.css';
 
-const Logo = () => (
+const Logo:FC = () => (
     <img src='../../../../assets/images/logo.png' alt='logo' />
 );
 

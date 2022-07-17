@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { FC } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 
 import css from './Search.module.css';
 
-const Search = () => (
+const Search:FC = () => (
     <div className={css.header__form_search}>
         <div className={css.header__form_icon}>
             <SearchIcon fontSize='small' />
