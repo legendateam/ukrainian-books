@@ -1,17 +1,27 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
+import { useTheme } from '@mui/material/styles';
 
 import css from './Search.module.css';
 
-const Search:FC = () => (
-    <div className={css.header__form_search}>
-        <div className={css.header__form_icon}>
-            <SearchIcon fontSize='small' />
+const Search:FC = () => {
+    const theme = useTheme();
+    const [dark, setDark] = useState('');
+
+    useEffect(() => {
+        // eslint-disable-next-line no-unused-expressions
+        theme.palette.mode === 'dark' ? setDark(css.header__form_search_form_dark) : setDark('');
+    }, [theme.palette.mode]);
+    return (
+        <div className={css.header__form_search}>
+            <div className={css.header__form_icon}>
+                <SearchIcon fontSize='small' />
+            </div>
+            <form className={dark || css.header__form_search_form}>
+                <input type='text' placeholder='Пошук' />
+            </form>
         </div>
-        <form>
-            <input type='text' placeholder={'Пошук'} />
-        </form>
-    </div>
-);
+    );
+};
 
 export default Search;
