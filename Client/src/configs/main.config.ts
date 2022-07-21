@@ -1,18 +1,14 @@
-import dotenv from 'dotenv';
-
-dotenv.config();
-
 export const mainConfig = {
-    NODE_ENVIRONMENT_VARIABLE: process.env.NODE_ENVIRONMENT_VARIABLE || 'dev',
-    BASE_URL: process.env.BASE_URL || 'http://localhost:2000',
+    ENVIRONMENT_VARIABLE: process.env.REACT_APP_ENVIRONMENT_VARIABLE || 'dev',
+    SERVER_URL: process.env.REACT_APP_SERVER_URL || 'http://localhost:2000',
 
-    DOMAIN_NAME: process.env.DOMAIN_NAME || 'https://my-domain.ua',
-    PROJECT_NAME: process.env.PROJECT_NAME || 'my-project',
+    DOMAIN_NAME: process.env.REACT_APP_DOMAIN_NAME || 'https://my-domain.ua',
+    PROJECT_NAME: process.env.REACT_APP_PROJECT_NAME || 'my-project',
 
-    CLOUD_DOMAIN_NAME: process.env.CLOUD_DOMAIN_NAME,
+    CLOUD_DOMAIN_NAME: process.env.REACT_APP_LOUD_DOMAIN_NAME,
 
-    ROOT_EMAIL: process.env.ROOT_EMAIL,
+    ROOT_EMAIL: process.env.REACT_APP_ROOT_EMAIL,
 
-    GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
-    GOOGLE_SECRET_KEY: process.env.GOOGLE_SECRET_KEY,
+    GOOGLE_CLIENT_ID: process.env.REACT_APP_GOOGLE_CLIENT_ID,
+    GOOGLE_SECRET_KEY: process.env.REACT_APP_GOOGLE_SECRET_KEY,
 };

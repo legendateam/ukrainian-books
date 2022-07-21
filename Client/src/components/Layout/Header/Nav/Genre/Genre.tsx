@@ -1,7 +1,12 @@
 import React, { FC } from 'react';
 
-const Genre:FC = () => (
-    <div>Genre</div>
+import { IGenre } from '../../../../../interfaces';
+
+const Genre:FC<Partial<IGenre>> = ({ name }) => (
+    <>
+        {name}
+        <br />
+    </>
 );
 
 export default Genre;
