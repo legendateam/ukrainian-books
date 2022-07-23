@@ -4,13 +4,3 @@
     width: 0;
     height: 0;
 }
-
-.header__nav_genres_typography {
-    display: flex;
-    flex-wrap: wrap;
-    list-style: none;
-    width: 145px;
-    gap: 8px;
-    justify-content: center;
-    text-align: center;
-}

@@ -1,7 +1,6 @@
 import React, {
     FC, useState,
 } from 'react';
-import Typography from '@mui/material/Typography';
 import Popover from '@mui/material/Popover';
 import Button from '@mui/material/Button';
 import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state';
@@ -49,11 +48,9 @@ const Genres:FC = () => {
                                 horizontal: 'left',
                             }}
                         >
-                            <Typography color='black' sx={{ p: 3 }}>
-                                {
-                                    !!genres.length && genres && genres.map((genre) => <Genre key={genre.id} name={genre.name} />)
-                                }
-                            </Typography>
+                            {
+                                genres && genres.map((genre) => <Genre key={genre.id} name={genre.name} />)
+                            }
                         </Popover>
                     </div>
                 )}
