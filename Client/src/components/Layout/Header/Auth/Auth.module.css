@@ -2,9 +2,28 @@
     display: flex;
     align-items: center;
     width: 11vw;
+    gap: 10px;
 }
 
-.header__auth {
-    display: flex;
-    gap: 10px;
+.header__auth a {
+    position: relative;
+    cursor: pointer;
+    line-height: 1; /*висота стрічки*/
+}
+
+.header__auth a:after {
+    display: block;
+    position: absolute;
+    top: 25px;
+    left: 0; /*замінити на right:0;, для того що би змінити направлення підкреслення*/
+    width: 0;/*задаєм довжину лінії до наведення курсора*/
+    height: 2px; /*задаємо ширину лінії*/
+    background-color: white; /*задаём колір лінії*/
+    content: "";
+    transition: width 0.3s ease-out; /*задаємо час анімації*/
+}
+
+.header__auth a:hover:after,
+.header__auth a:focus:after {
+    width: 100%; /*ширина підкреслення текста*/
 }

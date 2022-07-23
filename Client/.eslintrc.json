@@ -34,6 +34,7 @@
         "react/jsx-props-no-spreading": "off",
         "max-len": ["error", { "code": 140 }],
         "class-methods-use-this": "off",
+        "jsx-a11y/anchor-is-valid": 0,
         "jsx-quotes": ["error", "prefer-single"],
         "import/prefer-default-export": "off",
         "react/jsx-indent": ["error", 4],
