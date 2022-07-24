@@ -17,7 +17,9 @@ header {
     padding: 0.5% 10%;
 }
 
-.header__container li, p, a, h1, h2, h3, h4, h5, h6 {
+.header__container li, .header__container p, .header__container  a, .header__container  h1,
+.header__container h2, .header__container  h3, .header__container  h4, .header__container  h5,
+.header__container h6, .header__container  span {
     color: white;
 }
 

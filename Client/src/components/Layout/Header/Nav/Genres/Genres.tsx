@@ -29,7 +29,7 @@ const Genres:FC = () => {
 
     return (
         <div className={css.header__nav_genres}>
-            <PopupState variant='popover' popupId='demo-popup-popover'>
+            <PopupState variant='popover' popupId='genres-popup-popover'>
                 {(popupState) => (
                     <div>
                         <Button onSubmit={getGenres} variant='text' color='inherit' {...bindTrigger(popupState)}>

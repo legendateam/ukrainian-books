@@ -1,4 +1,4 @@
-export enum ErrorsKeysValidationsEnum {
+export enum KeyValidationErrorEnum {
     STRING_BASE='string.base',
     STRING_EMPTY='string.empty',
     STRING_MIN='string.min',
@@ -8,5 +8,6 @@ export enum ErrorsKeysValidationsEnum {
     NUMBER_BASE='number.base',
     NUMBER_EMPTY='number.empty',
     NUMBER_MIN='number.min',
-    NUMBER_MAX='number.max'
+    NUMBER_MAX='number.max',
+    AUTH_REGISTRATION='AUTH_REGISTRATION',
 }

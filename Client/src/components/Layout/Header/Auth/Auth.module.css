@@ -5,13 +5,13 @@
     gap: 10px;
 }
 
-.header__auth a {
+.header__auth p {
     position: relative;
     cursor: pointer;
     line-height: 1; /*висота стрічки*/
 }
 
-.header__auth a:after {
+.header__auth p:after {
     display: block;
     position: absolute;
     top: 25px;
@@ -23,7 +23,7 @@
     transition: width 0.3s ease-out; /*задаємо час анімації*/
 }
 
-.header__auth a:hover:after,
-.header__auth a:focus:after {
+.header__auth p:hover:after,
+.header__auth p:focus:after {
     width: 100%; /*ширина підкреслення текста*/
 }

@@ -18,7 +18,7 @@
 }
 
 .header__form_search_form input:hover, .header__form_search_form input:focus {
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgb(255, 255, 255, 0.8);
 }
 
 .header__form_search form input:focus {

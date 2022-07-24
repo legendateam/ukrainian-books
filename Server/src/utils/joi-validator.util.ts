@@ -2,10 +2,12 @@ import Joi from 'joi';
 
 import { joiCommonsFieldsUtil } from './joi-commons-fields.util';
 import { ErrorsMessagesValidationsConstant } from '../constants';
+import { regexConstant } from '../constants/regex.constant';
 
 class JoiValidatorUtil {
     public static userSchema: Joi.ObjectSchema = Joi.object({
         nickName: Joi.string().min(4).max(20).trim()
+            .regex(regexConstant.NICKNAME)
             .required()
             .messages(ErrorsMessagesValidationsConstant),
         password: joiCommonsFieldsUtil.password

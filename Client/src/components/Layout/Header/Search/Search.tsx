@@ -9,7 +9,6 @@ const Search:FC = () => {
     const [dark, setDark] = useState('');
 
     useEffect(() => {
-        // eslint-disable-next-line no-unused-expressions
         theme.palette.mode === 'dark' ? setDark(css.header__form_search_form_dark) : setDark('');
     }, [theme.palette.mode]);
     return (
