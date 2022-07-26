@@ -14,7 +14,6 @@ const Header: FC = () => {
     const [style, setStyle] = useState(`${css.header}`);
 
     useEffect(() => {
-        // eslint-disable-next-line no-unused-expressions
         theme.palette.mode === 'dark' ? setStyle(`${css.header__dark}`) : setStyle(`${css.header}`);
     }, [theme.palette.mode]);
 

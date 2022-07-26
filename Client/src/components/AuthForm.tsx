@@ -1,35 +1,50 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
+import { PhotoCamera } from '@mui/icons-material';
+import { Button, IconButton } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
+import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 
 import css from './AuthForm.module.css';
 import type { Span } from '../types';
 import { authFormValidator } from '../utils';
-import { fileMimetypeConstant } from '../constants';
+import {
+    fileMimetypeConstant, fileSizeConstant, errorFormatConstant, errorSizeConstant,
+} from '../constants';
 import { FileEnum } from '../enums';
+import { IToggle, IUserCreate } from '../interfaces';
 
-export const AuthForm: FC = () => {
-    const [errorInput, setErrorInput] = useState([]);
+export const AuthForm: FC<IToggle> = ({ toggle }: IToggle) => {
+    const [avatarName, setAvatarName] = useState('');
+    const [error, setError] = useState('');
 
-    const { register, handleSubmit, formState: { errors } } = useForm(
+    const {
+        register, watch, handleSubmit, formState: { errors },
+    } = useForm<IUserCreate>(
         { resolver: joiResolver(authFormValidator), mode: 'onTouched' },
     );
 
     const errorsMessagesValidators = errors as Span;
 
-    const submit = (data: any) => {
-        console.log(data);
-        console.log(errors);
+    const submit = (data: IUserCreate): void => {
+        if (fileSizeConstant.SIZE_AVATAR < data?.avatar[0].size
+            || !fileMimetypeConstant[FileEnum.PHOTOS].includes(data?.avatar[0].type)) {
+            setError(errorFormatConstant() + errorSizeConstant());
+            console.log(errorFormatConstant(), errorSizeConstant());
+        }
+
+        const userOfForm = Object.assign(data);
+        delete userOfForm.confirmPassword;
     };
 
     const mimetype = fileMimetypeConstant[FileEnum.PHOTOS].join();
 
-    useEffect(() => {
-        if (Object.keys(errors).length !== 0) {
-            const keysInputs = Object.keys(errors);
-            setErrorInput(keysInputs);
+    watch((value) => {
+        if (value.avatar[0]) {
+            setAvatarName(value.avatar[0].name);
         }
-    }, [Object.keys(errors).length]);
+    });
 
     return (
         <div className={css.header__auth_form}>
@@ -42,13 +57,16 @@ export const AuthForm: FC = () => {
                     ) }
                     <input
                         className={
-                            (!errorInput.includes('nickName') && css.header__auth_form_label_input_bg)
-                            || (errorInput.includes('nickName') && css.header__auth_form_label_input_error_bg)
+                            Object.keys(errors).includes('nickName') ? css.header__auth_form_label_input_error_bg
+                                : css.header__auth_form_label_input_bg
                         }
                         type='text'
                         defaultValue=''
                         {...register('nickName')}
                     />
+                    {
+                        errors.nickName && (<WarningAmberIcon className={css.header__auth_form_warning_amber_icon} />)
+                    }
                 </label>
 
                 <label htmlFor='email' className={css.header__auth_form_label}>
@@ -59,13 +77,16 @@ export const AuthForm: FC = () => {
                     ) }
                     <input
                         className={
-                            (!errorInput.includes('email') && css.header__auth_form_label_input_bg)
-                            || (errorInput.includes('email') && css.header__auth_form_label_input_error_bg)
+                            Object.keys(errors).includes('email') ? css.header__auth_form_label_input_error_bg
+                                : css.header__auth_form_label_input_bg
                         }
                         type='email'
                         defaultValue=''
                         {...register('email')}
                     />
+                    {
+                        errors.email && (<WarningAmberIcon className={css.header__auth_form_warning_amber_icon} />)
+                    }
                 </label>
 
                 <label htmlFor='password' className={css.header__auth_form_label}>
@@ -76,13 +97,16 @@ export const AuthForm: FC = () => {
                     ) }
                     <input
                         className={
-                            (!errorInput.includes('password') && css.header__auth_form_label_input_bg)
-                            || (errorInput.includes('password') && css.header__auth_form_label_input_error_bg)
+                            Object.keys(errors).includes('password') ? css.header__auth_form_label_input_error_bg
+                                : css.header__auth_form_label_input_bg
                         }
                         type='password'
                         defaultValue=''
                         {...register('password')}
                     />
+                    {
+                        errors.password && (<WarningAmberIcon className={css.header__auth_form_warning_amber_icon} />)
+                    }
                 </label>
 
                 <label htmlFor='confirmPassword' className={css.header__auth_form_label}>
@@ -93,34 +117,49 @@ export const AuthForm: FC = () => {
                     ) }
                     <input
                         className={
-                            (!errorInput.includes('confirmPassword') && css.header__auth_form_label_input_bg)
-                            || (errorInput.includes('confirmPassword') && css.header__auth_form_label_input_error_bg)
+                            Object.keys(errors).includes('confirmPassword') ? css.header__auth_form_label_input_error_bg
+                                : css.header__auth_form_label_input_bg
                         }
                         type='password'
                         defaultValue=''
                         {...register('confirmPassword')}
                     />
+                    {
+                        errors.confirmPassword && (<WarningAmberIcon className={css.header__auth_form_warning_amber_icon} />)
+                    }
                 </label>
 
                 <label htmlFor='avatar' className={css.header__auth_form_label_avatar}>
-                    Аватар: { errors && (
+                    Аватар: { avatarName ? <span>{avatarName}</span> : <span>не вибраний</span>}
+                    { errors && (
                         <span className={css.header__auth_form_span_error_message}>
                             { errorsMessagesValidators.avatar?.message }
                         </span>
                     ) }
-                    <input
-                        className={
-                            (!errorInput.includes('avatar') && css.header__auth_form_label_input_bg)
-                            || (errorInput.includes('avatar') && css.header__auth_form_label_input_error_bg)
-                        }
-                        type='file'
-                        accept={mimetype}
-                        {...register('avatar')}
-                    />
+                    <IconButton color='inherit' aria-label='upload picture' component='label'>
+                        <input
+                            className={
+                                Object.keys(errors).includes('avatar') ? css.header__auth_form_label_input_error_bg
+                                    : css.header__auth_form_label_input_bg
+                            }
+                            hidden
+                            accept={mimetype}
+                            type='file'
+                            {...register('avatar')}
+                        />
+                        <PhotoCamera />
+                    </IconButton>
+                    { !avatarName && <span className={css.header__auth_form_not_required}> (не обов`язково)</span> }
+                    {
+                        errors.avatar && (<WarningAmberIcon className={css.header__auth_form_warning_amber_icon} />)
+                    }
                 </label>
 
-                <button type='submit'>Зареєструватися</button>
+                <Button type='submit' variant='contained' color='success'>
+                    Зареєструватися
+                </Button>
             </form>
+            <CloseIcon className={css.header__auth_form_close_icon} onClick={toggle} />
         </div>
     );
 };

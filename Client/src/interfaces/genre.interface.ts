@@ -1,5 +1,3 @@
-import { ICommonResponseFields } from './commonResponseFields.interface';
-
-export interface IGenre extends ICommonResponseFields {
+export interface IGenre {
     name: string,
 }

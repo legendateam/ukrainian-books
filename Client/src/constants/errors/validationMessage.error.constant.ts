@@ -1,6 +1,6 @@
-import { KeyValidationErrorEnum } from '../enums';
+import { KeyValidationErrorEnum } from '../../enums';
 
-export const errorValidationMessageConstant = {
+export const validationMessageErrorConstant = {
     [KeyValidationErrorEnum.STRING_BASE]: '{{#label}} повинен вмістити букви',
     [KeyValidationErrorEnum.STRING_EMPTY]: '{{#label}} не може бути пустим',
     [KeyValidationErrorEnum.STRING_MAX]: '{{#label}} повинен мати довжину не більше ніж {#limit}',

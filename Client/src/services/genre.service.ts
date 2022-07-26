@@ -1,10 +1,10 @@
 import { axiosInstance } from './axiosInstance.service';
-import { IGenre, IResponseOK } from '../interfaces';
+import { IGenreResponse, IResponseOK } from '../interfaces';
 import { urls } from '../constants';
 
 class GenreService {
-    public async getAll() : Promise<IResponseOK<IGenre[]>> {
-        return axiosInstance.get<Promise<IResponseOK<IGenre[]>>>(urls.genres).then(({ data }) => data);
+    public async getAll() : Promise<IResponseOK<IGenreResponse[]>> {
+        return axiosInstance.get<Promise<IResponseOK<IGenreResponse[]>>>(urls.genres).then(({ data }) => data);
     }
 }
 

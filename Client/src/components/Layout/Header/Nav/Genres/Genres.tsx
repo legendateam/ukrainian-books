@@ -7,11 +7,11 @@ import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state';
 
 import css from './Genres.module.css';
 import Genre from '../Genre/Genre';
-import { IGenre } from '../../../../../interfaces';
+import { IGenreResponse } from '../../../../../interfaces';
 import { genreService } from '../../../../../services';
 
 const Genres:FC = () => {
-    const [genres, setGenres] = useState<IGenre[]>([]);
+    const [genres, setGenres] = useState<IGenreResponse[]>([]);
 
     const getGenres = async () => {
         // if (!genres.length) {
@@ -49,7 +49,7 @@ const Genres:FC = () => {
                             }}
                         >
                             {
-                                genres && genres.map((genre) => <Genre key={genre.id} name={genre.name} />)
+                                genres && genres.map((genre) => <Genre key={genre.id} genre={genre} />)
                             }
                         </Popover>
                     </div>
