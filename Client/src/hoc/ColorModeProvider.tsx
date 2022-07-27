@@ -9,7 +9,7 @@ type Props = {
 
 export const ColorModeContext = createContext({ toggleColorMode: () => {} });
 
-const ColorModeProvider: FC<Props> = ({ children }: Props) => {
+export const ColorModeProvider: FC<Props> = ({ children }: Props) => {
     const [mode, setMode] = useState<'light' | 'dark'>('light');
     const colorMode = useMemo(
         () => ({
@@ -37,5 +37,3 @@ const ColorModeProvider: FC<Props> = ({ children }: Props) => {
         </ColorModeContext.Provider>
     );
 };
-
-export default ColorModeProvider;

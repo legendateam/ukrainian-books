@@ -1,16 +1,16 @@
-import React, { FC, useState } from 'react';
-import { AuthForm } from '../../../../AuthForm';
+import React, { FC } from 'react';
+
+import css from './Login.module.css';
+import { useBlurMode } from '../../../../../hooks';
+import AuthRegistrationForm from '../AuthRegistrationForm/AuthRegistrationForm';
 
 const Login:FC = () => {
-    const [trigger, setTrigger] = useState(false);
+    const { handleBlurToggle, triggerBlur } = useBlurMode();
 
-    const toggle = () => {
-        trigger ? setTrigger(false) : setTrigger(true);
-    };
     return (
         <>
-            <p onClick={toggle}>Увійти</p>
-            { trigger && <AuthForm toggle={toggle} /> }
+            <button className={css.header__auth_login_btn} onClick={handleBlurToggle} type='button'><p>Увійти</p></button>
+            { triggerBlur && <AuthRegistrationForm /> }
         </>
     );
 };

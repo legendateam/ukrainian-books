@@ -6,18 +6,20 @@ import { Button, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 
-import css from './AuthForm.module.css';
-import type { Span } from '../types';
-import { authFormValidator } from '../utils';
+import css from './AuthRegistrationForm.module.css';
+import { useBlurMode } from '../../../../../hooks';
+import { IUserCreate } from '../../../../../interfaces';
+import { authFormValidator } from '../../../../../utils';
+import type { ErrorAuthForm } from '../../../../../types';
 import {
-    fileMimetypeConstant, fileSizeConstant, errorFormatConstant, errorSizeConstant,
-} from '../constants';
-import { FileEnum } from '../enums';
-import { IToggle, IUserCreate } from '../interfaces';
+    errorFormatConstant, errorSizeConstant, fileMimetypeConstant, fileSizeConstant,
+} from '../../../../../constants';
+import { FileEnum } from '../../../../../enums';
 
-export const AuthForm: FC<IToggle> = ({ toggle }: IToggle) => {
+const AuthRegistrationForm: FC = () => {
     const [avatarName, setAvatarName] = useState('');
     const [error, setError] = useState('');
+    const { handleBlurToggle } = useBlurMode();
 
     const {
         register, watch, handleSubmit, formState: { errors },
@@ -25,7 +27,7 @@ export const AuthForm: FC<IToggle> = ({ toggle }: IToggle) => {
         { resolver: joiResolver(authFormValidator), mode: 'onTouched' },
     );
 
-    const errorsMessagesValidators = errors as Span;
+    const errorsMessagesValidators = errors as ErrorAuthForm;
 
     const submit = (data: IUserCreate): void => {
         if (fileSizeConstant.SIZE_AVATAR < data?.avatar[0].size
@@ -159,7 +161,9 @@ export const AuthForm: FC<IToggle> = ({ toggle }: IToggle) => {
                     Зареєструватися
                 </Button>
             </form>
-            <CloseIcon className={css.header__auth_form_close_icon} onClick={toggle} />
+            <CloseIcon className={css.header__auth_form_close_icon} onClick={handleBlurToggle} />
         </div>
     );
 };
+
+export default AuthRegistrationForm;

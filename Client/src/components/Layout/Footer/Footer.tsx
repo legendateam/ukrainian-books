@@ -9,7 +9,6 @@ const Footer:FC = () => {
     const [dark, setDark] = useState('');
 
     useEffect(() => {
-        // eslint-disable-next-line no-unused-expressions
         theme.palette.mode === 'dark' ? setDark(css.footer__dark) : setDark('');
     }, [theme.palette.mode]);
 

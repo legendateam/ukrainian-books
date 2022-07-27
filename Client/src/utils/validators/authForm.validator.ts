@@ -5,8 +5,8 @@ import { regexConstant, validationMessageErrorConstant } from '../../constants';
 export const authFormValidator = Joi.object({
     nickName: Joi.string().min(4).max(20).trim()
         .regex(regexConstant.NICKNAME)
-        .required()
         .trim()
+        .required()
         .messages(validationMessageErrorConstant),
     email: Joi.string()
         .min(5)
@@ -19,8 +19,8 @@ export const authFormValidator = Joi.object({
     password: Joi.string().min(7).max(40).trim()
         .regex(regexConstant.PASSWORD)
         .disallow(Joi.ref('nickName'))
-        .required()
         .trim()
+        .required()
         .messages({
             ...validationMessageErrorConstant,
             'any.invalid': 'пароль і псевдонім не можуть бути однаковими!',

@@ -2,6 +2,7 @@ export * from './create/user.create.interface';
 export * from './props/genre.props.interface';
 export * from './response/genre.response.interface';
 export * from './commonResponseFields.interface';
+export * from './props/handleBlur.props.interface';
 export * from './response/ok.response.interface';
 export * from './response/error.response.interface';
 export * from './genre.interface';

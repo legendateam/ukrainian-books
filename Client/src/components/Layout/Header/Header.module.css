@@ -1,13 +1,14 @@
 header {
     height: 100px;
-}
-
-.header{
     background-color: #FF5A6F;
 }
 
 .header__dark {
     background-color: #323639;
+}
+
+.blur__bg  {
+    filter: blur(3px);
 }
 
 .header__container {

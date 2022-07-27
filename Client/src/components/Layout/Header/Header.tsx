@@ -11,14 +11,14 @@ import ToggleColorMode from './ToggleColorMode/ToggleColorMode';
 const Header: FC = () => {
     const theme = useTheme();
 
-    const [style, setStyle] = useState(`${css.header}`);
+    const [themeMode, setThemeMode] = useState(`${css.header}`);
 
     useEffect(() => {
-        theme.palette.mode === 'dark' ? setStyle(`${css.header__dark}`) : setStyle(`${css.header}`);
+        theme.palette.mode === 'dark' ? setThemeMode(`${css.header__dark}`) : setThemeMode(`${css.header}`);
     }, [theme.palette.mode]);
 
     return (
-        <header className={style}>
+        <header className={themeMode}>
             <div className={css.header__container}>
                 <Logo />
                 <div className={css.header__container_nav}>

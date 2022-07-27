@@ -29,4 +29,4 @@ interface Props extends FieldErrorsImpl{
     };
 }
 
-export type Span = Props & HTMLProps<HTMLButtonElement> & HTMLAttributes<HTMLButtonElement>;
+export type ErrorAuthForm = Props & HTMLProps<HTMLButtonElement> & HTMLAttributes<HTMLButtonElement>;
