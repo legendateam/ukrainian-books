@@ -3,13 +3,13 @@ import { FileEnum } from '../../enums';
 import { fileSizeConstant } from '../fileSize.constant';
 
 class FileMessageErrorConstant {
-    public static errorFormatConstant() {
-        return `Помилка: Формат файла повинен бути${fileFormatUtil(FileEnum.PHOTOS)}, або`;
+    public static errorAvatarFormatConstant() {
+        return `Формат файла повинен бути${fileFormatUtil(FileEnum.PHOTOS)}`;
     }
 
-    public static errorSizeConstant() {
+    public static errorAvatarSizeConstant() {
         return `розмір завеликий, повинен бути не більше ${fileSizeUtil(fileSizeConstant.SIZE_AVATAR)}Mb`;
     }
 }
 
-export const { errorFormatConstant, errorSizeConstant } = FileMessageErrorConstant;
+export const { errorAvatarFormatConstant, errorAvatarSizeConstant } = FileMessageErrorConstant;

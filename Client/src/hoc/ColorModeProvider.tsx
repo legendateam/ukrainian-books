@@ -19,7 +19,6 @@ export const ColorModeProvider: FC<Props> = ({ children }: Props) => {
         }),
         [mode],
     );
-
     const theme = useMemo(
         () => createTheme({
             palette: {

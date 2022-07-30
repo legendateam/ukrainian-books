@@ -7,8 +7,9 @@ import Auth from './Auth/Auth';
 import Search from './Search/Search';
 import Nav from './Nav/Nav';
 import ToggleColorMode from './ToggleColorMode/ToggleColorMode';
+import { IHandleRegistrationForm } from '../../../interfaces';
 
-const Header: FC = () => {
+const Header: FC<IHandleRegistrationForm> = ({ handleRegistration, triggerRegBtn }: IHandleRegistrationForm) => {
     const theme = useTheme();
 
     const [themeMode, setThemeMode] = useState(`${css.header}`);
@@ -25,7 +26,7 @@ const Header: FC = () => {
                     <Search />
                     <Nav />
                 </div>
-                <Auth />
+                <Auth handleRegistration={handleRegistration} triggerRegBtn={triggerRegBtn} />
                 <ToggleColorMode />
             </div>
         </header>

@@ -6,10 +6,16 @@ import css from './Layout.module.css';
 import Footer from './Footer/Footer';
 import Header from './Header/Header';
 import { useBlurMode } from '../../hooks';
-import AuthRegistrationForm from './Header/Auth/AuthRegistrationForm/AuthRegistrationForm';
+import AuthForm from './Header/Auth/AuthForm/AuthForm';
+import RegistrationForm from './Header/Auth/RegistrationForm/RegistrationForm';
 
 export const Layout = () => {
     const { triggerBlur } = useBlurMode();
+    const [triggerRegBtn, setTriggerRegBtn] = useState(false);
+
+    const handleRegistration = (): void => {
+        triggerRegBtn ? setTriggerRegBtn(false) : setTriggerRegBtn(true);
+    };
 
     return (
         <Box
@@ -20,8 +26,9 @@ export const Layout = () => {
                 color: 'text.primary',
             }}
         >
-            <Header />
-            { triggerBlur && <AuthRegistrationForm /> }
+            <Header handleRegistration={handleRegistration} triggerRegBtn={triggerRegBtn} />
+            { (triggerBlur && !triggerRegBtn) && <AuthForm handleRegistration={handleRegistration} /> }
+            { (triggerBlur && triggerRegBtn) && <RegistrationForm handleRegistration={handleRegistration} /> }
             <main className={css.content}>
                 <Outlet />
             </main>
