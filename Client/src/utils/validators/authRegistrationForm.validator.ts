@@ -18,12 +18,12 @@ export const authRegistrationFormValidator = Joi.object({
         .messages(validationMessageErrorConstant),
     password: Joi.string().min(7).max(40).trim()
         .regex(regexConstant.PASSWORD)
-        .disallow(Joi.ref('nickName'))
+        .disallow(Joi.ref('nickName'), Joi.ref('email'))
         .trim()
         .required()
         .messages({
             ...validationMessageErrorConstant,
-            'any.invalid': 'пароль і псевдонім не можуть бути однаковими!',
+            'any.invalid': 'пароль не може бути нікнеймом, чи поштою!',
         }),
     confirmPassword: Joi.any().valid(Joi.ref('password'))
         .required()

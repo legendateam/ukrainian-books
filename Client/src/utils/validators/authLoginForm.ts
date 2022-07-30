@@ -13,7 +13,7 @@ export const authLoginFormValidator = Joi.object({
         .messages(validationMessageErrorConstant),
     password: Joi.string().min(7).max(40).trim()
         .regex(regexConstant.PASSWORD)
-        .disallow(Joi.ref('nickName'))
+        .disallow(Joi.ref('email'))
         .trim()
         .required()
         .messages({
